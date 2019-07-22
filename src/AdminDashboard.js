@@ -135,6 +135,8 @@ class AdminDashboard extends Component {
           getLink: this.getLink
         }}
       >
+        <style>{`#admin-dashboard { --admin-dashboard-color: ${this.props
+          .color || '#D2BD2C'} }`}</style>
         <div id='admin-dashboard'>
           <Row>
             <Col xs={12}>
@@ -199,7 +201,8 @@ AdminDashboard.propTypes = {
   ).isRequired,
   children: PropTypes.element.isRequired,
   notFoundComponent: PropTypes.func.isRequired,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  color: PropTypes.string
 }
 
 export default withRouter(AdminDashboard)

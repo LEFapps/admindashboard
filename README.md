@@ -43,7 +43,7 @@ const App = () => (
   <Router>
     <Switch>
       <Route path='/admin'>
-        <AdminDashboard settings={paths} label={'Admin'} notFoundComponent={NotFound}>
+        <AdminDashboard settings={paths} label={'Admin'} color={'indianred'} notFoundComponent={NotFound}>
           <Admin />
         </AdminDashboard>
       </Route>
@@ -54,5 +54,5 @@ const App = () => (
 
 ## Todo
 
-* styling
+* styling _[in progress]_
 * Labels can accept: string, function or component
