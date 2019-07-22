@@ -1,12 +1,52 @@
 @charset 'utf-8';
 @import './mixins';
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,400i,700,700i&display=swap');
+
+$fourk: 240em; /* 3840px */
+$threek: 180em; /* 2880px */
+$tv: 160em; /* 2560px */
+$hd: 120em; /* 1920px */
+$full: 100em; /* 1600px */
+$width: 90em; /* 1440px */
+$desktop: 80em; /* 1280px d */
+$laptop: 64em; /* 1024px l */
+$netbook: 56em; /* 896px n */
+$tablet: 48em; /* 768px t */
+$phablet: 40em; /* 640px f */
+$phone: 30em; /* 480px p */
+$watch: 20em; /* 320px w */
+
+$grid-breakpoints: (
+  xs: 0em,
+  watch: $watch,
+  sm: $phone - 0.0625,
+  phone: $phone,
+  phablet: $phablet,
+  md: $tablet - 0.0625,
+  tablet: $tablet,
+  netbook: $netbook,
+  lg: $laptop - 0.0625,
+  laptop: $laptop,
+  xl: $desktop - 0.0625,
+  desktop: $desktop,
+  width: $width,
+  full: $full,
+  hd: $hd,
+  tv: $tv,
+  threek: $threek,
+  fourk: $fourk
+);
+
+$admin-shadow: 0.1875rem 0.375rem 1rem rgba(black, 0.16);
+
 #admin-dashboard {
   --secondary: beige;
   --text: #59553a;
 
-  font-family: 'Montserrat', sans-serif; // header
   font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
 }
+
 @import './layout';
 @import './breadcrumb';
+@import './board';

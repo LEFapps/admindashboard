@@ -1,0 +1,153 @@
+#admin-dashboard {
+  .admin-board {
+    background-color: white;
+
+    @include below($desktop) {
+      box-shadow: $admin-shadow;
+
+      &.admin-board__small {
+        z-index: 12;
+      }
+    }
+  }
+
+  .admin-board__content {
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    @include above($desktop) {
+      border-radius: 1em;
+      box-shadow: $admin-shadow;
+    }
+  }
+
+  .admin-board__head {
+    position: sticky;
+    top: 0;
+    z-index: 12;
+
+    margin-bottom: 3em;
+    padding: 1em;
+    padding-bottom: 0 !important;
+
+    background-color: var(--primary);
+
+    font-family: 'Montserrat', sans-serif;
+
+    &:before {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: -1;
+
+      padding-top: 12%;
+
+      background-color: inherit;
+
+      transform: skewY(-6deg);
+      transform-origin: right top;
+    }
+
+    > *:empty {
+      display: none;
+    }
+
+    .admin-board__head-title,
+    .admin-board__head-content {
+      color: white;
+    }
+    .admin-board__head-title {
+      margin: 0 !important;
+
+      font-weight: bold;
+      font-size: 1.5em;
+      text-transform: none;
+    }
+
+    .admin-board__head-content {
+      font-size: 0.75em;
+    }
+
+    .admin-board__head-actions {
+      margin-top: -2em;
+      text-align: right;
+      transform: translateY(50%);
+
+      .btn {
+        margin-left: 0.5em;
+
+        color: var(--primary);
+        background-color: white;
+        border: 0;
+        border-radius: 50%;
+        box-shadow: $admin-shadow;
+      }
+    }
+
+    @include above($laptop) {
+      padding: 2em;
+
+      .admin-board__head-title {
+        margin-bottom: 0.5em;
+
+        font-size: 2em;
+      }
+
+      .admin-board__head-content {
+        font-size: 0.875em;
+      }
+    }
+  }
+
+  .admin-board {
+    .admin-board__head {
+      &:before {
+        content: '';
+      }
+    }
+  }
+
+  .admin-board.admin-board__full {
+    .admin-board__head {
+      &:before {
+        @include above($tablet) {
+          content: none;
+        }
+      }
+    }
+  }
+
+  .admin-board__full {
+    @include above($tablet) {
+      .admin-board__head {
+        background-color: white;
+
+        .admin-board__head-title,
+        .admin-board__head-content {
+          color: var(--primary);
+        }
+
+        .admin-board__head-actions {
+          .btn {
+            color: white;
+            background-color: var(--primary);
+          }
+        }
+      }
+    }
+
+    .admin-board__body {
+      padding: 1em;
+
+      @include above($tablet) {
+        padding: 2em;
+      }
+
+      @include above($desktop) {
+        padding: 3em;
+      }
+    }
+  }
+}

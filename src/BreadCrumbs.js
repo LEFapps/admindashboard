@@ -10,9 +10,7 @@ const Breadcrumb = ({ children, id, className }) => (
 
 const BreadcrumbItem = ({ active, children, id, className }) => (
   <li
-    class={`breadcrumb-item${active ? ' active' : ''}${
-      className ? ' ' + className : ''
-    }`}
+    class={`breadcrumb-item${active ? ' active' : ''} ${className || ''}`}
     id={id}
     aria-current={active ? 'page' : false}
   >

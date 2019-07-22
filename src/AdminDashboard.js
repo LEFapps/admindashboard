@@ -133,7 +133,8 @@ class AdminDashboard extends Component {
       <Context.Provider
         value={{
           ...this.state,
-          getLink: this.getLink
+          getLink: this.getLink,
+          logo: this.props.logo
         }}
       >
         <style>{`#admin-dashboard { --primary: ${this.props.color ||
@@ -193,7 +194,8 @@ AdminDashboard.propTypes = {
   children: PropTypes.element.isRequired,
   notFoundComponent: PropTypes.func.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
-  color: PropTypes.string
+  color: PropTypes.string,
+  logo: PropTypes.string
 }
 
 export default withRouter(AdminDashboard)

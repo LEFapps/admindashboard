@@ -11,7 +11,7 @@
     "dev": "npm run css-watch && watch 'npm run build-dev' src",
     "prepublish": "npm run clean && npm run lint && npm run build",
     "css-build": "node-sass --omit-source-map-url --output-style 'compressed' src/scss/main.scss lib/css/main.css",
-    "css-watch": "npm run css-build -- --watch",
+    "css-watch": "npm run css-build -- --watch"
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,6 @@
     "@babel/polyfill": "^7.4.4",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-router-dom": "^4.3.1",
-    "reactstrap": "^8.0.0"
+    "react-router-dom": "^4.3.1"
   }
 }
