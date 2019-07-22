@@ -32,6 +32,8 @@ const paths = [
 
 const NotFound = () => <h1>404: Path not found</h1>
 
+const logoURL = 'https://my.cdn/images/logo.png'; // optional
+
 const Admin = () => (
   <div>
     <DashboardLink to='/users'>Users</DashboardLink>
@@ -43,7 +45,7 @@ const App = () => (
   <Router>
     <Switch>
       <Route path='/admin'>
-        <AdminDashboard settings={paths} label={'Admin'} notFoundComponent={NotFound}>
+        <AdminDashboard settings={paths} label={'Admin'} color={'indianred'} logo={logoURL} notFoundComponent={NotFound}>
           <Admin />
         </AdminDashboard>
       </Route>
@@ -52,7 +54,33 @@ const App = () => (
 )
 ```
 
+## Components
+
+### BoardHead & BoardBody
+
+```JSX
+import { BoardHead, BoardBody } from '@lefapps/admin-dashboard'
+
+const Users = ({users}) => {
+  const userContent = `${users.length} user(s)`
+  const userActions = [
+    <button onClick={addUser}>+</button>
+    <button onClick={clearUsers}>-</button>
+  ]
+  return (<>
+    <BoardHead title={'Users'} content={userContent} actions={userActions}>
+      <p>Some optional text.</p>
+    </BoardHead>
+    <BoardBody>
+      <ul>
+        {users.map(user => <li>{user.name}</li>)}
+      </ul>
+    </BoardBody>
+  </>
+)}
+```
+
 ## Todo
 
-* styling
+* styling _[in progress]_
 * Labels can accept: string, function or component

@@ -1,0 +1,83 @@
+#admin-dashboard {
+  height: 100vh;
+
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+
+  .admin-board {
+    flex: 0 0 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+
+    transition: margin-left 0.5s ease-out;
+
+    @include below($tablet) {
+      &:not(.admin-board__full) {
+        margin-left: -100%;
+      }
+    }
+
+    @include between($tablet, $laptop) {
+      flex: 0 0 37.5%;
+      max-width: 37.5%;
+
+      &.admin-board__full {
+        flex-basis: 62.5%;
+        max-width: 62.5%;
+      }
+
+      &.admin-board__hidden {
+        margin-left: -37.5%;
+      }
+
+      &:first-of-type {
+        flex: 0 0 37.5%;
+        max-width: 37.5%;
+      }
+    }
+
+    @include above($laptop) {
+      flex: 0 0 24em;
+      max-width: 24em;
+
+      &.admin-board__full {
+        flex-grow: 1;
+        max-width: none;
+      }
+
+      &.admin-board__hidden {
+        margin-left: -24em;
+      }
+
+      &:first-of-type {
+        flex: 0 0 24em;
+        max-width: 24em;
+      }
+    }
+
+    @include above($desktop) {
+      padding: 2em;
+
+      &.admin-board__small {
+        padding-right: 1em;
+      }
+
+      &.admin-board__full {
+        padding-left: 1em;
+      }
+    }
+
+    .admin-board__brand {
+      img {
+        width: 50%;
+        max-width: 12em;
+        margin: 2em auto 0;
+
+        display: block;
+        opacity: 0.5;
+      }
+    }
+  }
+}

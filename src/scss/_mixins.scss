@@ -1,0 +1,38 @@
+@mixin appearance($appearance) {
+  -webkit-appearance: $appearance;
+  -moz-appearance: $appearance;
+  appearance: $appearance;
+}
+
+@mixin no-select {
+  -webkit-user-select: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@mixin orientation($orientation) {
+  @media only screen and (orientation: $orientation) {
+    @content;
+  }
+}
+@mixin below($width) {
+  @media only screen and (max-width: $width - 0.0625) {
+    @content;
+  }
+}
+@mixin above($width) {
+  @media only screen and (min-width: $width) {
+    @content;
+  }
+}
+@mixin between($min, $max) {
+  @media only screen and (min-width: $min) and (max-width: $max - 0.0625) {
+    @content;
+  }
+}
+@mixin outside($min, $max) {
+  @media only screen and (max-width: $min - 0.0625), only screen and (min-width: $max) {
+    @content;
+  }
+}

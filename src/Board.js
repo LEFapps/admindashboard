@@ -1,5 +1,4 @@
 import React from 'react'
-import { Col } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
 
 const Context = React.createContext()
@@ -11,12 +10,11 @@ const Board = ({ levels, level, children, ...props }) => {
   const view = boardView(levels, level)
   return (
     <Context.Provider value={{ level }}>
-      <Col
-        md={view === 'full' ? 8 : 4}
-        className={view === 'hidden' ? 'd-none' : ''}
-      >
-        {React.cloneElement(children, props)}
-      </Col>
+      <article className={`admin-board${view ? ' admin-board__' + view : ''}`}>
+        <div className={'admin-board__content'}>
+          {React.cloneElement(children, props)}
+        </div>
+      </article>
     </Context.Provider>
   )
 }

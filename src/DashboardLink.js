@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { pathPropType } from './helpers'
 import { withContext } from './AdminDashboard'
 import { withBoard } from './Board'
 
 const DashboardLink = ({ to, getLink, level, children }) => {
-  return <Link to={getLink(to, level)}>{children}</Link>
+  return <NavLink to={getLink(to, level)}>{children}</NavLink>
 }
 
 DashboardLink.propTypes = {

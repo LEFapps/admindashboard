@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col } from 'reactstrap'
 import { withRouter, Switch, Route } from 'react-router-dom'
 
 import { pathPropType } from './helpers'
 import BreadCrumbs from './BreadCrumbs'
 import Board from './Board'
+
+import './css/main.css'
 
 const Context = React.createContext()
 
@@ -132,37 +133,30 @@ class AdminDashboard extends Component {
       <Context.Provider
         value={{
           ...this.state,
-          getLink: this.getLink
+          getLink: this.getLink,
+          logo: this.props.logo
         }}
       >
+        <style>{`#admin-dashboard { --primary: ${this.props.color ||
+          '#D2BD2C'} }`}</style>
         <div id='admin-dashboard'>
-          <Row>
-            <Col xs={12}>
-              <BreadCrumbs
-                getLink={this.getLink}
-                {...this.props}
-                {...this.state}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Board levels={boardSwitches.length} level={0}>
-              {this.props.children}
-            </Board>
-            {boardSwitches.map((pathObjects, i, { length }) => (
-              <Switch key={`board-switch-${i}`}>
-                {pathObjects.map(
-                  ({ absolutePath, component: Component, ...props }, j) => (
-                    <Route path={absolutePath} key={`route-${i}-${j}`}>
-                      <Board levels={length} level={i + 1} {...props}>
-                        <Component />
-                      </Board>
-                    </Route>
-                  )
-                )}
-              </Switch>
-            ))}
-          </Row>
+          <BreadCrumbs getLink={this.getLink} {...this.props} {...this.state} />
+          <Board levels={boardSwitches.length} level={0}>
+            {this.props.children}
+          </Board>
+          {boardSwitches.map((pathObjects, i, { length }) => (
+            <Switch key={`board-switch-${i}`}>
+              {pathObjects.map(
+                ({ absolutePath, component: Component, ...props }, j) => (
+                  <Route path={absolutePath} key={`route-${i}-${j}`}>
+                    <Board levels={length} level={i + 1} {...props}>
+                      <Component />
+                    </Board>
+                  </Route>
+                )
+              )}
+            </Switch>
+          ))}
         </div>
       </Context.Provider>
     )
@@ -199,7 +193,9 @@ AdminDashboard.propTypes = {
   ).isRequired,
   children: PropTypes.element.isRequired,
   notFoundComponent: PropTypes.func.isRequired,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  color: PropTypes.string,
+  logo: PropTypes.string
 }
 
 export default withRouter(AdminDashboard)
