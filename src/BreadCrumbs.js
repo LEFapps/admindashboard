@@ -1,7 +1,24 @@
 import React from 'react'
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import { Switch, Route, withRouter } from 'react-router-dom'
+
+const Breadcrumb = ({ children, id, className }) => (
+  <nav aria-label='breadcrumb' id={id} className={className}>
+    <ol className='breadcrumb'>{children}</ol>
+  </nav>
+)
+
+const BreadcrumbItem = ({ active, children, id, className }) => (
+  <li
+    class={`breadcrumb-item${active ? ' active' : ''}${
+      className ? ' ' + className : ''
+    }`}
+    id={id}
+    aria-current={active ? 'page' : false}
+  >
+    {children}
+  </li>
+)
 
 const Item = withRouter(
   ({
@@ -59,7 +76,7 @@ const BreadCrumbs = ({
 }) => {
   if (!boardSwitches) return null
   return (
-    <Breadcrumb>
+    <Breadcrumb id={'admin-dashboard-nav'}>
       <BreadcrumbItem active={boardSwitches.length === 0}>
         {boardSwitches.length === 0 ? (
           mainLabel
