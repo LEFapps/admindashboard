@@ -7,7 +7,7 @@ Use this package to automatically create a dashboard with navigation.
 ```JSX
 import { BrowserRouter as Router } from 'react-router-dom'
 import AdminDashboard, { DashboardLink } from '@lefapps/admin-dashboard'
-import { Translate } from '@lefapps/translations
+import { Translate } from '@lefapps/translations'
 import { Users, User } from 'users'
 
 const paths = [
@@ -32,7 +32,10 @@ const paths = [
 
 const NotFound = () => <h1>404: Path not found</h1>
 
-const logoURL = 'https://my.cdn/images/logo.png'; // optional
+const branding = {
+  color: 'indianred', // color should be dark enough, used as background for white text
+  logo: 'https://my.cdn/images/logo.png'
+}
 
 const Admin = () => (
   <div>
@@ -45,7 +48,7 @@ const App = () => (
   <Router>
     <Switch>
       <Route path='/admin'>
-        <AdminDashboard settings={paths} label={'Admin'} color={'indianred'} logo={logoURL} notFoundComponent={NotFound}>
+        <AdminDashboard settings={paths} label={'Admin'} branding={branding} notFoundComponent={NotFound}>
           <Admin />
         </AdminDashboard>
       </Route>
@@ -61,7 +64,7 @@ const App = () => (
 ```JSX
 import { BoardHead, BoardBody } from '@lefapps/admin-dashboard'
 
-const Users = ({users}) => {
+const Users = ({loading, users}) => {
   const userContent = `${users.length} user(s)`
   const userActions = [
     <button onClick={addUser}>+</button>
@@ -71,7 +74,7 @@ const Users = ({users}) => {
     <BoardHead title={'Users'} content={userContent} actions={userActions}>
       <p>Some optional text.</p>
     </BoardHead>
-    <BoardBody>
+    <BoardBody loading={loading}>
       <ul>
         {users.map(user => <li>{user.name}</li>)}
       </ul>

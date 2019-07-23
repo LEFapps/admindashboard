@@ -39,6 +39,8 @@
 
     font-family: 'Montserrat', sans-serif;
 
+    transition: 0.25s ease-in;
+
     @include above($tablet) {
       margin-bottom: 3em;
       padding: 2em;
@@ -115,11 +117,44 @@
   }
 
   .admin-board__body {
+    position: relative;
+
     flex: 1 0 auto;
     padding-bottom: 6em;
 
     background: white none no-repeat center bottom 1em;
     background-size: auto 4em;
+
+    &:after {
+      content: '';
+
+      position: absolute;
+      top: 40vh;
+      left: 50%;
+      z-index: 54;
+
+      width: 2em;
+      height: 2em;
+      margin-left: -1em;
+      margin-top: -1em;
+
+      border: 1em solid var(--primary);
+      border-top-color: white;
+      border-bottom-color: white;
+      border-radius: 1em;
+      opacity: 0;
+
+      transition: opacity 0.3s ease-in-out 0.3s;
+      animation: rotate 0.5s linear 0s infinite forwards;
+
+      pointer-events: none;
+    }
+
+    &.admin-board__loading {
+      &:after {
+        opacity: 1;
+      }
+    }
   }
 
   .admin-board {
