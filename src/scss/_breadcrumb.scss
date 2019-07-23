@@ -1,9 +1,9 @@
 #admin-dashboard {
-  @include below($laptop) {
+  @include below($desktop) {
     padding-bottom: 2em;
   }
 
-  @include above($laptop) {
+  @include above($desktop) {
     padding-top: 2em;
   }
 }
@@ -22,17 +22,20 @@
   box-shadow: $admin-shadow;
 
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.625em;
   font-weight: bold;
   text-transform: uppercase;
-  line-height: 1.6;
 
-  @include above($laptop) {
+  transform: rotate(180deg);
+
+  @include above($desktop) {
     bottom: auto;
-    top: 0.5em;
+    top: 0.75em;
 
     box-shadow: none;
-    font-size: 1em;
+  }
+
+  @include below($desktop) {
+    font-size: 0.8125em;
   }
 
   &:before,
@@ -71,18 +74,22 @@
 
     background-color: white;
 
+    transform: rotate(-180deg);
+
     .breadcrumb-item {
       position: relative;
 
       flex: 0 0 auto;
-      padding: 0 1em;
+      padding: 0.3em 1em 0.2em;
 
       overflow: hidden;
 
       color: white;
       background-color: var(--primary);
-      border-radius: 0.25em;
+      border-radius: 0.3em;
       white-space: nowrap;
+
+      line-height: 1;
 
       * {
         color: inherit;
@@ -95,40 +102,35 @@
       }
 
       + .breadcrumb-item {
-        margin-left: -0.5em;
+        margin-left: -0.2em;
         padding-left: 2em;
 
-        * {
-          color: inherit;
-        }
-        &:before,
         &:after {
           content: '';
 
           position: absolute;
           top: 0.2em;
-          left: -0.4em;
+          left: -0.35em;
           z-index: 4;
 
           width: 1.2em;
           height: 1.2em;
 
           background-color: var(--primary);
-          border-radius: 0.1em;
+          border: 0.25em solid white;
+          border-left-width: 0;
+          border-bottom-width: 0;
+          border-radius: 0.2em;
 
-          transform: rotate(52.5deg) skew(15deg);
-        }
-
-        &:before {
-          margin-left: 0.25em;
-          background-color: white;
+          transform: rotate(50.5deg) skew(12deg);
         }
       }
 
-      &:last-of-type {
-        color: var(--color);
+      &.active {
+        color: var(--primary);
+        background-color: var(--light);
 
-        background-color: var(--secondary);
+        // opacity: 0.5;
       }
     }
   }

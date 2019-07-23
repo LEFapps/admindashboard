@@ -10,7 +10,7 @@
     "build-dev": "npm run css-build && cross-env BABEL_ENV=development babel src --out-dir lib",
     "dev": "npm run css-watch && watch 'npm run build-dev' src",
     "prepublish": "npm run clean && npm run lint && npm run build",
-    "css-build": "node-sass --omit-source-map-url --output-style 'compressed' src/scss/main.scss lib/css/main.css",
+    "css-build": "node-sass --omit-source-map-url --output-style 'compressed' src/scss/main.scss lib/dashboard.css",
     "css-watch": "npm run css-build -- --watch"
   },
   "repository": {

@@ -6,9 +6,14 @@ import { pathPropType } from './helpers'
 import BreadCrumbs from './BreadCrumbs'
 import Board from './Board'
 
-import './css/main.css'
+import './dashboard.css'
 
 const Context = React.createContext()
+
+const defaultBranding = {
+  color: '#D2BD2C',
+  logo: ''
+}
 
 class AdminDashboard extends Component {
   constructor (props) {
@@ -134,11 +139,16 @@ class AdminDashboard extends Component {
         value={{
           ...this.state,
           getLink: this.getLink,
-          logo: this.props.logo
+          logo: this.props.branding
+            ? this.props.branding.logo
+            : defaultBranding.logo
         }}
       >
-        <style>{`#admin-dashboard { --primary: ${this.props.color ||
-          '#D2BD2C'} }`}</style>
+        <style>{`#admin-dashboard { --primary: ${
+          this.props.branding && this.props.branding.color
+            ? this.props.branding.color
+            : defaultBranding.color
+        } }`}</style>
         <div id='admin-dashboard'>
           <BreadCrumbs getLink={this.getLink} {...this.props} {...this.state} />
           <Board levels={boardSwitches.length} level={0}>
@@ -194,8 +204,10 @@ AdminDashboard.propTypes = {
   children: PropTypes.element.isRequired,
   notFoundComponent: PropTypes.func.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
-  color: PropTypes.string,
-  logo: PropTypes.string
+  branding: PropTypes.shape({
+    color: PropTypes.string,
+    logo: PropTypes.string
+  })
 }
 
 export default withRouter(AdminDashboard)

@@ -79,5 +79,11 @@
         opacity: 0.5;
       }
     }
+
+    &.admin-board__full {
+      .admin-board__brand {
+        display: none;
+      }
+    }
   }
 }

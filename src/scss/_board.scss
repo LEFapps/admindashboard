@@ -6,7 +6,7 @@
       box-shadow: $admin-shadow;
 
       &.admin-board__small {
-        z-index: 12;
+        z-index: 42;
       }
     }
   }
@@ -34,6 +34,10 @@
     background-color: var(--primary);
 
     font-family: 'Montserrat', sans-serif;
+
+    @include above($tablet) {
+      padding: 2em;
+    }
 
     &:before {
       position: absolute;
@@ -64,10 +68,20 @@
       font-weight: bold;
       font-size: 1.5em;
       text-transform: none;
+
+      @include above($tablet) {
+        margin-bottom: 0.5em !important;
+
+        font-size: 2em;
+      }
     }
 
     .admin-board__head-content {
       font-size: 0.75em;
+
+      @include above($tablet) {
+        font-size: 0.875em;
+      }
     }
 
     .admin-board__head-actions {
@@ -83,20 +97,6 @@
         border: 0;
         border-radius: 50%;
         box-shadow: $admin-shadow;
-      }
-    }
-
-    @include above($laptop) {
-      padding: 2em;
-
-      .admin-board__head-title {
-        margin-bottom: 0.5em;
-
-        font-size: 2em;
-      }
-
-      .admin-board__head-content {
-        font-size: 0.875em;
       }
     }
   }
