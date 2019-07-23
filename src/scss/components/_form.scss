@@ -1,0 +1,53 @@
+#admin-dashboard {
+  .form-group {
+    label {
+      margin: 0 0 0.5em;
+
+      display: block;
+
+      color: var(--primary);
+
+      font-size: 0.875em;
+    }
+
+    input[type='text'],
+    input[type='number'],
+    input[type='tel'],
+    input[type='email'],
+    input[type='password'],
+    select,
+    textarea,
+    output {
+      color: var(--text);
+      background-color: var(--light);
+      border-radius: var(--radius);
+      border: none;
+      outline: 0;
+      box-shadow: none;
+
+      transition: background 0.3s ease-out;
+
+      &:not(:disabled):focus {
+        color: white;
+        background-color: var(--primary);
+      }
+    }
+  }
+
+  form {
+    .btn,
+    button {
+      border-radius: var(--radius);
+      border: none;
+      outline: 0;
+      box-shadow: none;
+
+      font-weight: bold;
+      font-family: 'Montserrat', sans-serif;
+
+      &:not(:disabled) {
+        cursor: pointer;
+      }
+    }
+  }
+}

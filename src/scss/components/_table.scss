@@ -1,0 +1,67 @@
+#admin-dashboard {
+  .table {
+    th,
+    td {
+      padding: 0.5rem 0.75rem;
+
+      border-top: 0 transparent;
+      border-bottom: 1px solid var(--light);
+    }
+
+    thead {
+      th,
+      td {
+        border-bottom-width: 2px;
+      }
+    }
+  }
+
+  .admin-board:not(.admin-board__full) .adminlist {
+    td,
+    th {
+      &:not(:nth-child(-n + 2)):not(.action.edit) {
+        display: none;
+      }
+    }
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      position: relative;
+
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    td,
+    th {
+      flex: 0 0 100%;
+
+      &:first-child {
+        padding-bottom: 0;
+
+        border-bottom-width: 0;
+
+        font-weight: bold;
+      }
+
+      + td,
+      + th {
+        padding-top: 0;
+
+        font-size: 0.625em;
+        text-transform: uppercase;
+      }
+
+      &.action.edit {
+        position: absolute;
+        right: 0.75rem;
+        top: 0.75rem;
+
+        border-bottom-width: 0;
+      }
+    }
+  }
+}

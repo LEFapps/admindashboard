@@ -1,0 +1,84 @@
+.admin-board-title {
+  margin: 0.5em 0;
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  text-transform: none;
+}
+
+#admin-dashboard {
+  .admin-board__body {
+    line-height: 1.44;
+
+    h1,
+    h2 {
+      @extend .admin-board-title;
+      color: var(--primary);
+      font-size: 1.5em;
+    }
+  }
+
+  h3 {
+    @extend .admin-board-title;
+    font-size: 1.5em;
+  }
+
+  h4 {
+    @extend .admin-board-title;
+    font-size: 1em;
+  }
+
+  h5,
+  h6 {
+    @extend .admin-board-title;
+
+    font-size: 0.8125em;
+    text-transform: uppercase;
+  }
+
+  h5 {
+    color: var(--primary);
+  }
+
+  h6 {
+    color: var(--light);
+  }
+
+  p {
+    margin: 0;
+
+    font-size: 1em;
+
+    + p {
+      margin-top: 0.5em;
+    }
+
+    a {
+      color: var(--primary);
+      border-bottom: 2px dotted var(--primary);
+
+      text-decoration: none;
+    }
+  }
+
+  blockquote {
+    margin: 1em 0;
+    padding: 0.5em 0.75em;
+
+    background-color: var(--light);
+    border-left: var(--radius) solid var(--primary);
+    border-radius: var(--radius);
+
+    font-style: italic;
+  }
+
+  strong,
+  b {
+    font-weight: bold;
+  }
+
+  em,
+  i {
+    font-style: italic;
+  }
+}
