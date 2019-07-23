@@ -2,11 +2,11 @@
   .admin-board {
     background-color: white;
 
-    @include below($desktop) {
+    @include between($tablet, $desktop) {
       box-shadow: $admin-shadow;
 
       &.admin-board__small {
-        z-index: 12;
+        z-index: 42;
       }
     }
   }
@@ -15,6 +15,10 @@
     height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 
     @include above($desktop) {
       border-radius: 1em;
@@ -27,13 +31,21 @@
     top: 0;
     z-index: 12;
 
-    margin-bottom: 3em;
+    flex: 0 0 auto;
+    margin-bottom: 1em;
     padding: 1em;
-    padding-bottom: 0 !important;
 
     background-color: var(--primary);
 
     font-family: 'Montserrat', sans-serif;
+
+    transition: 0.25s ease-in;
+
+    @include above($tablet) {
+      margin-bottom: 3em;
+      padding: 2em;
+      padding-bottom: 0 !important;
+    }
 
     &:before {
       position: absolute;
@@ -64,16 +76,33 @@
       font-weight: bold;
       font-size: 1.5em;
       text-transform: none;
+
+      @include above($tablet) {
+        margin-bottom: 0.5em !important;
+
+        font-size: 2em;
+      }
     }
 
     .admin-board__head-content {
       font-size: 0.75em;
+
+      @include above($tablet) {
+        font-size: 0.875em;
+      }
     }
 
     .admin-board__head-actions {
-      margin-top: -2em;
+      position: absolute;
+      bottom: 0;
+      right: 1em;
+      // margin-top: -2em;
       text-align: right;
       transform: translateY(50%);
+
+      @include above($tablet) {
+        right: 2em;
+      }
 
       .btn {
         margin-left: 0.5em;
@@ -85,18 +114,45 @@
         box-shadow: $admin-shadow;
       }
     }
+  }
 
-    @include above($laptop) {
-      padding: 2em;
+  .admin-board__body {
+    position: relative;
 
-      .admin-board__head-title {
-        margin-bottom: 0.5em;
+    flex: 1 0 auto;
+    padding-bottom: 6em;
 
-        font-size: 2em;
-      }
+    background: white none no-repeat center bottom 1em;
+    background-size: auto 4em;
 
-      .admin-board__head-content {
-        font-size: 0.875em;
+    &:after {
+      content: '';
+
+      position: absolute;
+      top: 40vh;
+      left: 50%;
+      z-index: 54;
+
+      width: 2em;
+      height: 2em;
+      margin-left: -1em;
+      margin-top: -1em;
+
+      border: 1em solid var(--primary);
+      border-top-color: white;
+      border-bottom-color: white;
+      border-radius: 1em;
+      opacity: 0;
+
+      transition: opacity 0.3s ease-in-out 0.3s;
+      animation: rotate 0.5s linear 0s infinite forwards;
+
+      pointer-events: none;
+    }
+
+    &.admin-board__loading {
+      &:after {
+        opacity: 1;
       }
     }
   }
@@ -104,7 +160,9 @@
   .admin-board {
     .admin-board__head {
       &:before {
-        content: '';
+        @include above($tablet) {
+          content: '';
+        }
       }
     }
   }
@@ -139,7 +197,11 @@
     }
 
     .admin-board__body {
+      flex: 1 0 auto;
       padding: 1em;
+
+      background-image: none !important;
+      background-size: 0 0;
 
       @include above($tablet) {
         padding: 2em;
