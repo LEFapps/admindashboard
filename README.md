@@ -67,12 +67,12 @@ import { BoardHead, BoardBody } from '@lefapps/admin-dashboard'
 const Users = ({loading, users}) => {
   const userContent = `${users.length} user(s)`
   const userActions = [
-    <button onClick={addUser}>+</button>
-    <button onClick={clearUsers}>-</button>
+    <button className={'btn'} onClick={goBack} title={'back'}>‹</button>,
+    <button className={'btn btn-lg'} onClick={addUser} title={'Add a new user.'}>+</button>
   ]
   return (<>
     <BoardHead title={'Users'} content={userContent} actions={userActions}>
-      <p>Some optional text.</p>
+      <p>Some optional text, which will be shown below "userContent".</p>
     </BoardHead>
     <BoardBody loading={loading}>
       <ul>

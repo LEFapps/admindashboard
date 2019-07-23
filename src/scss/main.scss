@@ -49,8 +49,12 @@ $admin-shadow: 0.1875rem 0.375rem 1rem rgba(black, 0.16);
 }
 
 #admin-dashboard {
-  --light: GHOSTWHITE;
+  --light: WHITESMOKE;
   --text: DIMGRAY;
+  --success: SEAGREEN;
+  --warning: GOLD;
+  --danger: INDIANRED;
+  --radius: 0.25rem;
 
   box-sizing: border-box;
 
@@ -71,3 +75,7 @@ $admin-shadow: 0.1875rem 0.375rem 1rem rgba(black, 0.16);
 @import './layout';
 @import './breadcrumb';
 @import './board';
+
+@import './components/table';
+@import './components/text';
+@import './components/form';
