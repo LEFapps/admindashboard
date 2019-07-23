@@ -14,13 +14,11 @@ const BoardHead = ({ title, content, actions = [], children, className }) => {
 
 const BoardBody = withContext(({ children, className, logo }) => {
   return (
-    <section className={`admin-board__body ${className || ''}`}>
+    <section
+      className={`admin-board__body ${className || ''}`}
+      style={logo ? { backgroundImage: `url(${logo})` } : {}}
+    >
       {children}
-      {logo ? (
-        <footer className={'admin-board__brand'}>
-          <img src={logo} alt='' />
-        </footer>
-      ) : null}
     </section>
   )
 })

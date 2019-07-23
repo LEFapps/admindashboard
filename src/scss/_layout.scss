@@ -17,6 +17,10 @@
       &:not(.admin-board__full) {
         margin-left: -100%;
       }
+
+      &:first-of-type:last-of-type {
+        margin-left: 0;
+      }
     }
 
     @include between($tablet, $laptop) {
@@ -66,23 +70,6 @@
 
       &.admin-board__full {
         padding-left: 1em;
-      }
-    }
-
-    .admin-board__brand {
-      img {
-        width: 50%;
-        max-width: 12em;
-        margin: 2em auto 0;
-
-        display: block;
-        opacity: 0.5;
-      }
-    }
-
-    &.admin-board__full {
-      .admin-board__brand {
-        display: none;
       }
     }
   }
