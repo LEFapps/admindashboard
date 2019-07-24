@@ -64,4 +64,49 @@
       }
     }
   }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+
+    .page-item {
+      position: relative;
+
+      margin: 0 0.125em;
+
+      color: var(--primary);
+      background: none;
+      border: 0;
+      box-shadow: none;
+
+      &.active {
+        z-index: 2;
+
+        color: white;
+        // transform: scale(1.333);
+
+        .page-link {
+          background-color: var(--primary);
+        }
+      }
+
+      .page-link {
+        width: 2em;
+        height: 2em;
+        padding: 0.5em 0;
+
+        color: inherit;
+        background-color: var(--light);
+        border: 0;
+        border-radius: 50%;
+        box-shadow: none;
+
+        text-align: center;
+        line-height: 1;
+        font-size: 0.875em;
+        // font-size: 0.75em;
+        font-weight: bold;
+      }
+    }
+  }
 }
