@@ -1,66 +1,153 @@
 #admin-dashboard {
   .table {
+    tr {
+      border-bottom: 1px solid var(--light);
+    }
+
     th,
     td {
       padding: 0.5rem 0.75rem;
 
-      border-top: 0 transparent;
-      border-bottom: 1px solid var(--light);
+      border: 0 transparent;
     }
 
     thead {
+      tr {
+        border-bottom-width: 2px;
+      }
+    }
+
+    tbody {
       th,
       td {
-        border-bottom-width: 2px;
+        @include below($desktop) {
+          font-size: 0.875em;
+        }
       }
     }
   }
 
-  .admin-board:not(.admin-board__full) .adminlist {
-    td,
-    th {
-      &:not(:nth-child(-n + 2)):not(.action.edit) {
+  .admin-board:not(.admin-board__full) {
+    .adminlist {
+      .adminlist-labels {
         display: none;
       }
-    }
 
-    thead {
-      display: none;
-    }
+      .adminlist-filters {
+        th,
+        td {
+          padding-top: 0;
+        }
+      }
 
-    tr {
+      thead {
+        tr {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        th,
+        td {
+          flex: 0 0 100%;
+
+          &:empty {
+            display: none;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          position: relative;
+
+          padding-right: 3em;
+
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        td,
+        th {
+          flex: 0 0 auto;
+
+          font-size: 1em;
+
+          &.order-0,
+          &:not([class*='order-']):not(.adminlist-compact):first-child {
+            flex-basis: 100%;
+            padding-bottom: 0;
+
+            border-bottom-width: 0;
+
+            font-weight: bold;
+          }
+
+          &.adminlist-compact:not(.order-0),
+          &:not(:first-child):not(.order-0) {
+            padding-top: 0;
+
+            font-size: 0.625em;
+            text-transform: uppercase;
+          }
+
+          &.adminlist-expand {
+            display: none !important;
+          }
+
+          &.adminlist-action.edit {
+            position: absolute;
+            right: 0.75rem;
+            top: 0.75rem;
+
+            display: block !important;
+
+            border-bottom-width: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+
+    .page-item {
       position: relative;
 
-      display: flex;
-      flex-wrap: wrap;
-    }
+      margin: 0 0.125em;
 
-    td,
-    th {
-      flex: 0 0 100%;
+      color: var(--primary);
+      background: none;
+      border: 0;
+      box-shadow: none;
 
-      &:first-child {
-        padding-bottom: 0;
+      &.active {
+        z-index: 2;
 
-        border-bottom-width: 0;
+        color: white;
+        // transform: scale(1.333);
 
+        .page-link {
+          background-color: var(--primary);
+        }
+      }
+
+      .page-link {
+        width: 2em;
+        height: 2em;
+        padding: 0.5em 0;
+
+        color: inherit;
+        background-color: var(--light);
+        border: 0;
+        border-radius: 50%;
+        box-shadow: none;
+
+        text-align: center;
+        line-height: 1;
+        font-size: 0.875em;
         font-weight: bold;
-      }
-
-      + td,
-      + th {
-        padding-top: 0;
-
-        font-size: 0.625em;
-        text-transform: uppercase;
-      }
-
-      &.action.edit {
-        position: absolute;
-        right: 0.75rem;
-        top: 0.75rem;
-
-        border-bottom-width: 0;
       }
     }
   }

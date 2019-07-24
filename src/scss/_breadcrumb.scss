@@ -1,9 +1,9 @@
 #admin-dashboard {
-  @include below($desktop) {
+  @include below($tablet) {
     padding-bottom: 2em;
   }
 
-  @include above($desktop) {
+  @include above($tablet) {
     padding-top: 2em;
   }
 }
@@ -27,8 +27,12 @@
 
   // transform: rotate(180deg);
 
-  @include above($desktop) {
+  @include above($tablet) {
     bottom: auto;
+    top: 0;
+  }
+
+  @include above($desktop) {
     top: 0.75em;
 
     box-shadow: none;
