@@ -25,7 +25,6 @@ class AdminDashboard extends Component {
   }
   componentDidUpdate (prevProps) {
     if (prevProps.location.pathname !== this.props.location.pathname) {
-      console.log(this.processPathname())
       this.setState({
         pathArray: this.processPathname(),
         boardSwitches: this.setBoardSwitches(this.processPathname())
@@ -61,8 +60,6 @@ class AdminDashboard extends Component {
     } = this.props
     const l = pathArray.length
     const boardSwitches = []
-
-    console.log(pathArray)
 
     const thisPathArray = []
     pathArray.map(path => {
@@ -109,7 +106,6 @@ class AdminDashboard extends Component {
       thisPathArray.push(path)
     })
 
-    console.log(boardSwitches)
     return boardSwitches
   }
   getLink = (path, level) => {

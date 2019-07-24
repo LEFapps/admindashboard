@@ -37,7 +37,7 @@ const branding = {
   logo: 'https://my.cdn/images/logo.png'
 }
 
-const Admin = () => (
+const FirstBoard = () => (
   <div>
     <DashboardLink to='/users'>Users</DashboardLink>
     <DashboardLink to='/locations'>Locations</DashboardLink>
@@ -48,8 +48,13 @@ const App = () => (
   <Router>
     <Switch>
       <Route path='/admin'>
-        <AdminDashboard settings={paths} label={'Admin'} branding={branding} notFoundComponent={NotFound}>
-          <Admin />
+        <AdminDashboard
+          settings={paths}
+          label={'Admin'}
+          branding={branding}
+          notFoundComponent={NotFound}
+        >
+          <FirstBoard />
         </AdminDashboard>
       </Route>
     </Switch>
