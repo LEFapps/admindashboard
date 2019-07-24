@@ -1,5 +1,6 @@
 #admin-dashboard {
-  .form-group {
+  .form-group,
+  .adminlist-filters {
     label {
       margin: 0 0 0.5em;
 
@@ -32,9 +33,30 @@
         background-color: var(--primary);
       }
     }
+
+    .input-group {
+      overflow: hidden;
+
+      border-radius: var(--radius);
+
+      .input-group-append,
+      .input-group-prepend {
+        color: white;
+        background-color: var(--primary);
+        border: 0 !important;
+      }
+
+      input,
+      output,
+      select,
+      textarea {
+        border-radius: 0;
+      }
+    }
   }
 
-  form {
+  form,
+  .adminlist-filters {
     .btn,
     button {
       border-radius: var(--radius);
