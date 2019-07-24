@@ -126,7 +126,7 @@ class AdminDashboard extends Component {
     const {
       match: { path: url }
     } = this.props
-    return url + pathArray.join('')
+    return (url + pathArray.join('')).replace(/\/\//, '/')
   }
   render () {
     const { boardSwitches } = this.state
