@@ -36,9 +36,10 @@ class AdminDashboard extends Component {
       location: { pathname },
       match: { url }
     } = this.props
+    const urlPath = url === '/' ? '' : url
     const pathArray = []
     const pathParts = pathname
-      .replace(url, '')
+      .replace(urlPath, '')
       .split('/')
       .slice(1)
     pathParts.forEach((p, i) => {
@@ -58,16 +59,15 @@ class AdminDashboard extends Component {
       match: { url },
       notFoundComponent
     } = this.props
+    const urlPath = url === '/' ? '' : url
     const l = pathArray.length
     const boardSwitches = []
-
     const thisPathArray = []
     pathArray.map(path => {
       path
         .substring(1)
         .split('/')
         .map((pathPart, i) => {
-          console.log(pathPart)
           const pathObjects = []
           settings.map(settingsPath => {
             // const thisPathArray = pathArray.slice(0, l - 1)
@@ -77,7 +77,8 @@ class AdminDashboard extends Component {
             }
             if (i === 0) {
               pathObjects.push({
-                absolutePath: url + thisPathArray.join('') + settingsPath.path,
+                absolutePath:
+                  urlPath + thisPathArray.join('') + settingsPath.path,
                 path: settingsPath.path,
                 component: settingsPath.component,
                 label: settingsPath.label
@@ -89,7 +90,7 @@ class AdminDashboard extends Component {
                   .join('')
                   .replace(path, settingsPath.path + view.path)
                 pathObjects.push({
-                  absolutePath: url + thisViewPath,
+                  absolutePath: urlPath + thisViewPath,
                   path: settingsPath.path + view.path,
                   component: view.component,
                   label: view.label
@@ -126,7 +127,8 @@ class AdminDashboard extends Component {
     const {
       match: { path: url }
     } = this.props
-    return (url + pathArray.join('')).replace(/\/\//, '/')
+    const urlPath = url === '/' ? '' : url
+    return urlPath + pathArray.join('') // .replace(/\/\//, '/')
   }
   render () {
     const { boardSwitches } = this.state
