@@ -1,16 +1,15 @@
 #admin-menu {
-  .nav-item {
-    border-bottom: 1px solid var(--light);
-  }
-
   .nav-link {
-    color: var(--primary);
+    color: var(--text);
+    border-bottom: 1px solid var(--light);
 
     font-weight: bold;
     font-size: 1.2em;
 
     &.active {
-      background-color: var(--light);
+      color: white;
+      background-color: var(--primary);
+      border-color: var(--primary);
     }
   }
 }

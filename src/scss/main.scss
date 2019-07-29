@@ -85,6 +85,7 @@ $admin-colors: (
 @import './board';
 @import './menu';
 
-@import './components/table';
-@import './components/text';
-@import './components/form';
+@import './reset/table';
+@import './reset/text';
+@import './reset/form';
+@import './reset/card';

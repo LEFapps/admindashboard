@@ -1,7 +1,7 @@
 #admin-dashboard {
   .form-group,
   .adminlist-filters {
-    label {
+    label:not(.custom-control-label) {
       margin: 0 0 0.5em;
 
       display: block;
@@ -9,6 +9,7 @@
       color: var(--primary);
 
       font-size: 0.875em;
+      font-weight: bold;
     }
 
     input[type='text'],
@@ -69,6 +70,36 @@
 
       &:not(:disabled) {
         cursor: pointer;
+      }
+    }
+  }
+
+  .md-preview {
+    > .text.md-preview-content {
+      position: relative;
+
+      padding: 0.75em 0.5em;
+
+      color: var(--text);
+      border: 1px solid var(--light);
+      border-radius: var(--radius);
+
+      font-size: 0.875rem;
+
+      &:before {
+        content: 'preview';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        color: var(--text);
+        opacity: 0.05;
+
+        font-size: 2em;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        transform: translate(-50%, -50%) rotate(-30deg);
       }
     }
   }
