@@ -1,28 +1,23 @@
 import React from 'react'
-import { withContext } from './AdminDashboard'
 
-const BoardHead = ({ title, content, actions = [], children, className }) => {
-  return (
-    <header className={`admin-board__head ${className || ''}`}>
-      <h2 className={'admin-board__head-title'}>{title}</h2>
-      <div className={'admin-board__head-content'}>{content}</div>
-      <div className={'admin-board__head-content'}>{children}</div>
-      <div className={'admin-board__head-actions'}>{actions}</div>
-    </header>
-  )
-}
+const Head = ({ title, content, actions = [], children, className }) => (
+  <header className={`admin-board__head ${className || ''}`}>
+    <h2 className={'admin-board__head-title'}>{title}</h2>
+    <div className={'admin-board__head-content'}>{content}</div>
+    <div className={'admin-board__head-content'}>{children}</div>
+    <div className={'admin-board__head-actions'}>{actions}</div>
+  </header>
+)
 
-const BoardBody = withContext(({ loading, children, className, logo }) => {
-  return (
-    <section
-      className={`admin-board__body ${
-        loading ? 'admin-board__loading' : ''
-      } ${className || ''}`}
-      style={logo ? { backgroundImage: `url(${logo})` } : {}}
-    >
-      {children}
-    </section>
-  )
-})
+const Body = ({ loading, children, className, logo }) => (
+  <section
+    className={`admin-board__body ${
+      loading ? 'admin-board__loading' : ''
+    } ${className || ''}`}
+    style={logo ? { backgroundImage: `url(${logo})` } : {}}
+  >
+    {children}
+  </section>
+)
 
-export { BoardHead, BoardBody }
+export { Head, Body }

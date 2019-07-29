@@ -6,6 +6,8 @@ import { withContext } from './AdminDashboard'
 import { withBoard } from './Board'
 
 const DashboardLink = ({ to, getLink, level, children, ...props }) => {
+  delete props.pathArray
+  delete props.boardSwitches
   return (
     <NavLink to={getLink(to, level)} {...props}>
       {children}
