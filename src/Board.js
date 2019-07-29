@@ -12,7 +12,7 @@ const Board = ({ levels, level, children, ...props }) => {
     <Context.Provider value={{ level }}>
       <article className={`admin-board${view ? ' admin-board__' + view : ''}`}>
         <div className={'admin-board__content'}>
-          {React.cloneElement(children, props)}
+          {children ? React.cloneElement(children, props) : null}
         </div>
       </article>
     </Context.Provider>

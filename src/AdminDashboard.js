@@ -5,15 +5,27 @@ import { withRouter, Switch, Route } from 'react-router-dom'
 import { pathPropType } from './helpers'
 import BreadCrumbs from './BreadCrumbs'
 import Board from './Board'
-
-import './dashboard.css'
+import { Body, Head } from './BoardParts'
 
 const Context = React.createContext()
+
+const withContext = Component => {
+  return function AdminDashboardComponent (props) {
+    return (
+      <Context.Consumer>
+        {dashboard => <Component {...props} {...dashboard} />}
+      </Context.Consumer>
+    )
+  }
+}
 
 const defaultBranding = {
   color: '#D2BD2C',
   logo: ''
 }
+
+const BoardBody = withContext(Body)
+const BoardHead = withContext(Head)
 
 class AdminDashboard extends Component {
   constructor (props) {
@@ -171,16 +183,6 @@ class AdminDashboard extends Component {
   }
 }
 
-const withContext = Component => {
-  return function AdminDashboardComponent (props) {
-    return (
-      <Context.Consumer>
-        {dashboard => <Component {...props} {...dashboard} />}
-      </Context.Consumer>
-    )
-  }
-}
-
 const shapePropType = {
   path: (p, pN, cN) => pathPropType(p, pN, cN)(1),
   component: PropTypes.func.isRequired,
@@ -209,4 +211,4 @@ AdminDashboard.propTypes = {
 }
 
 export default withRouter(AdminDashboard)
-export { withContext }
+export { withContext, BoardHead, BoardBody }
