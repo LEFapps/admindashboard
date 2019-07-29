@@ -6,6 +6,7 @@ import { pathPropType } from './helpers'
 import BreadCrumbs from './BreadCrumbs'
 import Board from './Board'
 import { Body, Head } from './BoardParts'
+import MainMenu from './MainMenu'
 
 const Context = React.createContext()
 
@@ -162,21 +163,31 @@ class AdminDashboard extends Component {
         <div id='admin-dashboard'>
           <BreadCrumbs getLink={this.getLink} {...this.props} {...this.state} />
           <Board levels={boardSwitches.length} level={0}>
-            {this.props.children}
+            <>
+              <BoardHead title={this.props.label} />
+              <Body>
+                <MainMenu
+                  getLink={this.getLink}
+                  settings={this.props.settings}
+                />
+              </Body>
+            </>
           </Board>
-          {boardSwitches.map((pathObjects, i, { length }) => (
-            <Switch key={`board-switch-${i}`}>
-              {pathObjects.map(
-                ({ absolutePath, component: Component, ...props }, j) => (
-                  <Route path={absolutePath} key={`route-${i}-${j}`}>
-                    <Board levels={length} level={i + 1} {...props}>
-                      <Component />
-                    </Board>
-                  </Route>
-                )
-              )}
-            </Switch>
-          ))}
+          {boardSwitches && boardSwitches.length
+            ? boardSwitches.map((pathObjects, i, { length }) => (
+              <Switch key={`board-switch-${i}`}>
+                {pathObjects.map(
+                  ({ absolutePath, component: Component, ...props }, j) => (
+                    <Route path={absolutePath} key={`route-${i}-${j}`}>
+                      <Board levels={length} level={i + 1} {...props}>
+                        <Component />
+                      </Board>
+                    </Route>
+                  )
+                )}
+              </Switch>
+            ))
+            : this.props.children}
         </div>
       </Context.Provider>
     )
