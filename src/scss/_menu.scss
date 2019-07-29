@@ -1,0 +1,15 @@
+#admin-menu {
+  .nav-link {
+    color: var(--text);
+    border-bottom: 1px solid var(--light);
+
+    font-weight: bold;
+    font-size: 1.2em;
+
+    &.active {
+      color: white;
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+  }
+}

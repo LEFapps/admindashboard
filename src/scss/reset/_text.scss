@@ -81,4 +81,46 @@
   i {
     font-style: italic;
   }
+
+  @each $var, $color in $admin-colors {
+    .text-#{$var} {
+      color: var(--#{$var});
+    }
+
+    .btn.btn-#{$var} {
+      color: var(--#{$var});
+      background-color: var(--light);
+      border: 0;
+
+      &:hover {
+        color: white;
+        background-color: var(--#{$var});
+      }
+    }
+
+    .btn.btn-outline-#{$var} {
+      color: var(--#{$var});
+      border: 0;
+
+      &:hover {
+        color: white;
+        background-color: var(--#{$var});
+      }
+    }
+
+    .badge.badge-#{$var} {
+      color: white;
+      background-color: var(--#{$var});
+      border-color: var(--#{$var});
+    }
+
+    .alert.alert-#{$var} {
+      color: var(--#{$var});
+      background-color: var(--light);
+      border-color: var(--#{$var});
+      border-width: 0;
+      border-left-width: 0.25em;
+      border-radius: 0;
+    }
+  }
 }
