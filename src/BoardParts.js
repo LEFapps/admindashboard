@@ -20,4 +20,8 @@ const Body = ({ loading, children, className, logo }) => (
   </section>
 )
 
-export { Head, Body }
+const Tools = ({ children }) => (
+  <aside id={'admin-dashboard__tools'}>{children}</aside>
+)
+
+export { Head, Body, Tools }

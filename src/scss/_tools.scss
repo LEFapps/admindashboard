@@ -1,0 +1,98 @@
+#admin-dashboard__tools {
+  position: fixed;
+  right: 0;
+  z-index: 600;
+
+  display: flex;
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  @include below($tablet) {
+    top: 100vh;
+
+    width: 100vw;
+    height: 70vh;
+    padding: 2em;
+
+    background-color: white;
+
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    transition: 0.3s;
+
+    &:hover {
+      top: 30vh;
+
+      box-shadow: $admin-shadow;
+
+      &:after {
+        opacity: 0;
+      }
+    }
+
+    &:after {
+      content: '☰';
+
+      position: fixed;
+      right: 0;
+      bottom: 0;
+
+      width: 2em;
+      height: 2em;
+
+      color: var(--primary);
+
+      line-height: 2;
+      text-align: center;
+
+      transition: opacity 0.3s;
+    }
+
+    > * {
+      flex: 0 0 auto;
+    }
+  }
+
+  @include above($tablet) {
+    top: 0;
+  }
+
+  @include above($desktop) {
+    top: 0.75em;
+    right: 1.75em;
+  }
+
+  @include between($tablet, $desktop) {
+    font-size: 0.8125em;
+  }
+
+  .nav-item {
+    color: var(--text);
+    list-style: none;
+  }
+
+  a {
+    color: var(--primary);
+  }
+
+  .dropdown-menu {
+    color: var(--text);
+    border: 0;
+    box-shadow: $admin-shadow;
+
+    text-transform: none;
+
+    .dropdown-item {
+      color: inherit;
+
+      &:hover,
+      &:focus {
+        background-color: var(--light);
+      }
+    }
+  }
+}

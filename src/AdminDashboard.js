@@ -167,7 +167,7 @@ class AdminDashboard extends Component {
             : defaultBranding.logo
         }}
       >
-        <style>{`#admin-dashboard { --primary: ${
+        <style>{`#admin-dashboard, #admin-dashboard__tools { --primary: ${
           this.props.branding && this.props.branding.color
             ? this.props.branding.color
             : defaultBranding.color

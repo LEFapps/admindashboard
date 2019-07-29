@@ -88,7 +88,28 @@ const Users = ({loading, users}) => {
 )}
 ```
 
+### AdminTools
+
+Use this component to wrap components to show up on the right-hand side of the breadcrumbs, e.g.: language selection or sign-out button. Correct styling will be provided. Raise an issue or pull request for specific styling issues.
+
+```JSX
+import { AdminTools } from '@lefapps/admin-dashboard'
+import { PickLanguage } from 'meteor/lef:translations'
+import UserMenu from 'meteor/lef:userui'
+
+const App = props => (
+  <Router>
+    <>
+      <AdminDashboard {...props} />
+      <AdminTools>
+        <PickLanguage />
+        <UserMenu />
+      </AdminTools>
+    </>
+  </Router>
+)
+```
+
 ## Todo
 
-* styling _[in progress]_
 * Labels can accept: string, function or component
