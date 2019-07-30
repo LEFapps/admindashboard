@@ -112,4 +112,5 @@ const App = props => (
 
 ## Todo
 
+* Way to get path to use in DashboardLink.to
 * Labels can accept: string, function or component

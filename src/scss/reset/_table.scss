@@ -90,7 +90,8 @@
             text-transform: uppercase;
           }
 
-          &.adminlist-expand {
+          &.adminlist-expand,
+          &.adminlist-action {
             display: none !important;
           }
 
