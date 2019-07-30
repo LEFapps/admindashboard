@@ -25,6 +25,8 @@ const defaultBranding = {
   logo: ''
 }
 
+const above = size => window.matchMedia(`(min-width: ${size}px)`).matches
+
 const BoardBody = withContext(Body)
 const BoardHead = withContext(Head)
 
@@ -33,8 +35,18 @@ class AdminDashboard extends Component {
     super(props)
     this.state = {
       pathArray: this.processPathname(),
-      boardSwitches: this.setBoardSwitches(this.processPathname())
+      boardSwitches: this.setBoardSwitches(this.processPathname()),
+      aboveTablet: above(768)
     }
+  }
+  componentDidMount () {
+    window.addEventListener('resize', this.trackResize)
+  }
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.trackResize)
+  }
+  trackResize = () => {
+    this.setState({ aboveTablet: above(768) })
   }
   componentDidUpdate (prevProps) {
     if (prevProps.location.pathname !== this.props.location.pathname) {
@@ -155,7 +167,7 @@ class AdminDashboard extends Component {
             : defaultBranding.logo
         }}
       >
-        <style>{`#admin-dashboard { --primary: ${
+        <style>{`#admin-dashboard, #admin-dashboard__tools { --primary: ${
           this.props.branding && this.props.branding.color
             ? this.props.branding.color
             : defaultBranding.color
@@ -173,8 +185,8 @@ class AdminDashboard extends Component {
               </Body>
             </>
           </Board>
-          {boardSwitches && boardSwitches.length
-            ? boardSwitches.map((pathObjects, i, { length }) => (
+          {boardSwitches && boardSwitches.length ? (
+            boardSwitches.map((pathObjects, i, { length }) => (
               <Switch key={`board-switch-${i}`}>
                 {pathObjects.map(
                   ({ absolutePath, component: Component, ...props }, j) => (
@@ -187,7 +199,11 @@ class AdminDashboard extends Component {
                 )}
               </Switch>
             ))
-            : this.props.children}
+          ) : this.props.children && this.state.aboveTablet ? (
+            <Board levels={1} level={1}>
+              {this.props.children}
+            </Board>
+          ) : null}
         </div>
       </Context.Provider>
     )
@@ -212,7 +228,7 @@ AdminDashboard.propTypes = {
       })
     )
   ).isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element,
   notFoundComponent: PropTypes.func.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   branding: PropTypes.shape({

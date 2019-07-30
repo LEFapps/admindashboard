@@ -62,6 +62,10 @@
       transform-origin: right top;
     }
 
+    a {
+      color: inherit;
+    }
+
     > *:empty {
       display: none;
     }
