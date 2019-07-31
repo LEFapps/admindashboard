@@ -22,7 +22,8 @@
     input[type='file'],
     select,
     textarea,
-    output {
+    output,
+    input:-internal-autofill-selected {
       color: var(--text);
       background-color: var(--light);
       border-radius: var(--radius);
@@ -30,12 +31,18 @@
       outline: 0;
       box-shadow: none;
 
+      font-size: 1rem;
+
       transition: background 0.3s ease-out;
 
       &:not(:disabled):focus {
         color: white;
         background-color: var(--primary);
       }
+    }
+
+    input:-internal-autofill-selected {
+      text-decoration: underline;
     }
 
     .input-group {
@@ -86,6 +93,9 @@
       color: var(--text);
       border: 1px solid var(--light);
       border-radius: var(--radius);
+
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
 
       font-size: 0.875rem;
 
