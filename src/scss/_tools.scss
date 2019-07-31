@@ -24,7 +24,8 @@
 
     transition: 0.3s;
 
-    &:hover {
+    &:hover,
+    &:focus {
       top: 30vh;
 
       box-shadow: $admin-shadow;
