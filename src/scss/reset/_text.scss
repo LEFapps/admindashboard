@@ -72,6 +72,22 @@
     font-style: italic;
   }
 
+  dl {
+    dt {
+      margin-right: 0.5em;
+
+      float: left;
+      clear: left;
+
+      font-weight: bold;
+    }
+
+    dd {
+      margin-bottom: 0;
+      padding-left: 1em;
+    }
+  }
+
   strong,
   b {
     font-weight: bold;
@@ -84,43 +100,44 @@
 
   @each $var, $color in $admin-colors {
     .text-#{$var} {
-      color: var(--#{$var});
+      color: var(--#{$var}) !important;
     }
 
     .btn.btn-#{$var} {
-      color: var(--#{$var});
-      background-color: var(--light);
+      color: var(--#{$var}) !important;
+      background-color: var(--light) !important;
       border: 0;
 
       &:hover {
-        color: white;
-        background-color: var(--#{$var});
+        color: white !important;
+        background-color: var(--#{$var}) !important;
       }
     }
 
     .btn.btn-outline-#{$var} {
-      color: var(--#{$var});
+      color: var(--#{$var}) !important;
+      background-color: transparent !important;
       border: 0;
 
       &:hover {
-        color: white;
-        background-color: var(--#{$var});
+        color: white !important;
+        background-color: var(--#{$var}) !important;
       }
     }
 
     .badge.badge-#{$var} {
-      color: white;
-      background-color: var(--#{$var});
+      color: white !important;
+      background-color: var(--#{$var}) !important;
       border-color: var(--#{$var});
     }
 
     .alert.alert-#{$var} {
-      color: var(--#{$var});
-      background-color: var(--light);
-      border-color: var(--#{$var});
-      border-width: 0;
-      border-left-width: 0.25em;
-      border-radius: 0;
+      color: var(--#{$var}) !important;
+      background-color: var(--light) !important;
+      border-color: var(--#{$var}) !important;
+      border-width: 0 !important;
+      border-left-width: 0.25em !important;
+      border-radius: 0 !important;
     }
   }
 }
