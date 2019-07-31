@@ -156,11 +156,12 @@ class AdminDashboard extends Component {
     return urlPath + pathArray.join('') // .replace(/\/\//, '/')
   }
   render () {
-    const { boardSwitches } = this.state
+    const { aboveTablet, ...state } = this.state
+    const { boardSwitches } = state
     return (
       <Context.Provider
         value={{
-          ...this.state,
+          ...state,
           getLink: this.getLink,
           logo: this.props.branding
             ? this.props.branding.logo
@@ -173,7 +174,7 @@ class AdminDashboard extends Component {
             : defaultBranding.color
         } }`}</style>
         <div id='admin-dashboard'>
-          <BreadCrumbs getLink={this.getLink} {...this.props} {...this.state} />
+          <BreadCrumbs getLink={this.getLink} {...this.props} {...state} />
           <Board levels={boardSwitches.length} level={0}>
             <>
               <BoardHead title={this.props.label} />
@@ -199,7 +200,7 @@ class AdminDashboard extends Component {
                 )}
               </Switch>
             ))
-          ) : this.props.children && this.state.aboveTablet ? (
+          ) : this.props.children && aboveTablet ? (
             <Board levels={1} level={1}>
               {this.props.children}
             </Board>
