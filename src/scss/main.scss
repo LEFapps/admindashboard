@@ -39,6 +39,7 @@ $grid-breakpoints: (
 
 $admin-shadow: 0.1875rem 0.375rem 1rem rgba(black, 0.16);
 $admin-colors: (
+  primary: var(--primary),
   secondary: LIGHTSLATEGRAY,
   light: WHITESMOKE,
   text: DIMGRAY,
