@@ -1,10 +1,14 @@
-#admin-dashboard {
+#admin-dashboard,
+.admin-dashboard__style .admin-dashboard__imitator {
   height: 100vh;
 
   display: flex;
   flex-wrap: nowrap;
   overflow: hidden;
+}
 
+#admin-dashboard,
+.admin-dashboard__style {
   .admin-board {
     flex: 0 0 100%;
     height: 100%;

@@ -58,9 +58,12 @@ $admin-colors: (
 }
 
 #admin-dashboard,
-#admin-dashboard__tools {
+#admin-dashboard__tools,
+.admin-dashboard__style {
   @each $var, $color in $admin-colors {
-    --#{$var}: #{$color};
+    @if $var != primary {
+      --#{$var}: #{$color};
+    }
   }
 
   --radius: 0.25rem;
