@@ -1,3 +1,12 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 #admin-dashboard,
 .admin-dashboard__style {
   .admin-board {
@@ -98,22 +107,17 @@
     }
 
     .admin-board__head-actions {
-      position: absolute;
-      bottom: 0;
-      right: 1em;
-      // margin-top: -2em;
-      text-align: right;
-      transform: translateY(50%);
+      margin-top: -1em;
+      margin-bottom: -2.5em;
 
-      @include above($tablet) {
-        right: 2em;
-      }
+      text-align: right;
 
       .btn {
         position: relative;
 
         width: 2.5em;
         margin-left: 0.5em;
+        margin-bottom: 0.5em;
         padding: 0;
 
         color: var(--primary);

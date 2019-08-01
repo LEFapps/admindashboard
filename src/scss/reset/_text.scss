@@ -86,6 +86,14 @@
     dd {
       margin-bottom: 0;
       padding-left: 1em;
+
+      &:empty {
+        &:after {
+          content: '-';
+
+          color: var(--light);
+        }
+      }
     }
   }
 
