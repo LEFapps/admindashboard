@@ -182,12 +182,12 @@ class AdminDashboard extends Component {
           <Board levels={boardSwitches.length} level={0}>
             <>
               <BoardHead title={this.props.label} />
-              <Body>
+              <BoardBody>
                 <MainMenu
                   getLink={this.getLink}
                   settings={this.props.settings}
                 />
-              </Body>
+              </BoardBody>
             </>
           </Board>
           {boardSwitches && boardSwitches.length ? (
