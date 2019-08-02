@@ -24,25 +24,39 @@
     textarea,
     output,
     input:-internal-autofill-selected {
-      color: var(--text);
-      background-color: var(--light);
-      border-radius: var(--radius);
-      border: none;
+      color: var(--text) !important;
+      background-color: var(--light) !important;
+      border-radius: var(--radius) !important;
+      border: none !important;
       outline: 0;
-      box-shadow: none;
+      box-shadow: none !important;
 
       font-size: 1rem;
 
       transition: background 0.3s ease-out;
 
       &:not(:disabled):focus {
-        color: white;
-        background-color: var(--primary);
+        color: white !important;
+        background-color: var(--primary) !important;
+      }
+
+      &:disabled,
+      &:read-only {
+        background-color: white !important;
+        border: 1px solid var(--light) !important;
       }
     }
 
     input:-internal-autofill-selected {
       text-decoration: underline;
+    }
+
+    ::placeholder {
+      opacity: 0.7;
+
+      line-height: 1.7;
+      font-size: 0.875em;
+      font-style: italic;
     }
 
     .input-group {
@@ -67,7 +81,8 @@
   }
 
   form,
-  .adminlist {
+  .adminlist,
+  .modal {
     .btn,
     button {
       border-radius: var(--radius);
@@ -113,6 +128,18 @@
         text-transform: uppercase;
 
         transform: translate(-50%, -50%) rotate(-30deg);
+      }
+    }
+  }
+
+  .admin-board.admin-board__small,
+  .admin-board.admin-board__hidden {
+    .row {
+      padding: 1em;
+
+      > [class*='col-'] {
+        flex: 0 0 100%;
+        max-width: 100%;
       }
     }
   }

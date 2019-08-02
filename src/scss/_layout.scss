@@ -5,6 +5,8 @@
   display: flex;
   flex-wrap: nowrap;
   overflow: hidden;
+
+  transition: 0.3s;
 }
 
 #admin-dashboard,
@@ -76,5 +78,11 @@
         padding-left: 1em;
       }
     }
+  }
+}
+
+.modal-open #admin-dashboard {
+  @include above($desktop) {
+    transform: scale(0.95);
   }
 }

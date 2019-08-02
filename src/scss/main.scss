@@ -73,6 +73,11 @@ $admin-colors: (
       color: inherit;
     }
   }
+
+  ::selection {
+    color: var(--primary);
+    background-color: var(--light);
+  }
 }
 
 @import './layout';
@@ -85,3 +90,4 @@ $admin-colors: (
 @import './reset/text';
 @import './reset/form';
 @import './reset/card';
+@import './reset/modal';
