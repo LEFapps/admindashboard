@@ -84,7 +84,7 @@ class AdminDashboard extends Component {
   getUrl = () =>
     this.props.location.pathname.replace(cleanBase(this.props.match.url), '')
   /* Zero based current level */
-  getLevel = () => this.getUrl().split('/').length - 1
+  getLevel = () => cleanBase(this.getUrl()).split('/').length - 1
   getLink = (path, level, isView) => {
     const base = this.props.match.url
     const url = this.getUrl()
@@ -143,20 +143,22 @@ class AdminDashboard extends Component {
               </BoardBody>
             </>
           </Board>
-          {boardSwitches.map((pathObjects, i) => (
-            <Switch key={`board-switch-${i}`}>
-              {pathObjects.map(
-                ({ absolutePath, component: Component, ...props }, j) => (
-                  <Route path={absolutePath} key={`route-${i}-${j}`}>
-                    <Board levels={level} level={i + 1} {...props}>
-                      <Component />
-                    </Board>
-                  </Route>
-                )
-              )}
-            </Switch>
-          ))}
-          {level === 1 && this.props.children && aboveTablet ? (
+          {boardSwitches.map((pathObjects, i) =>
+            i > level - 1 ? null : (
+              <Switch key={`board-switch-${i}`}>
+                {pathObjects.map(
+                  ({ absolutePath, component: Component, ...props }, j) => (
+                    <Route path={absolutePath} key={`route-${i}-${j}`}>
+                      <Board levels={level} level={i + 1} {...props}>
+                        <Component />
+                      </Board>
+                    </Route>
+                  )
+                )}
+              </Switch>
+            )
+          )}
+          {!level && this.props.children && aboveTablet ? (
             <Board levels={1} level={1}>
               {this.props.children}
             </Board>
