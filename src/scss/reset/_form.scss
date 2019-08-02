@@ -23,7 +23,7 @@
     select,
     textarea,
     output,
-    input:-internal-autofill-selected {
+    .form-control {
       color: var(--text) !important;
       background-color: var(--light) !important;
       border-radius: var(--radius) !important;

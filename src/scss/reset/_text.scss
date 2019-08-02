@@ -57,6 +57,7 @@
     a {
       color: var(--primary);
       border-bottom: 2px dotted var(--primary);
+      outline: 0 !important;
 
       text-decoration: none;
     }

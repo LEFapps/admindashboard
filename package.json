@@ -10,7 +10,8 @@
     "build-dev": "npm run css-build && cross-env BABEL_ENV=development babel src --out-dir lib",
     "dev": "npm run css-watch && watch 'npm run build-dev' src",
     "prepublish": "npm run clean && npm run build",
-    "css-build": "node-sass --omit-source-map-url --output-style 'compressed' src/scss/main.scss lib/dashboard.css",
+    "css-build": "node-sass --omit-source-map-url --output-style 'compressed' src/scss/main.scss lib/dashboard.css && npm run prefix-css",
+    "prefix-css": "postcss lib/*.css -u autoprefixer -b 'last 5 versions' -r",
     "css-watch": "npm run css-build -- --watch"
   },
   "repository": {
@@ -31,6 +32,7 @@
     "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@babel/preset-env": "^7.5.4",
     "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.6.1",
     "babel-eslint": "^10.0.2",
     "babel-preset-minify": "^0.5.0",
     "cross-env": "^5.2.0",
@@ -43,6 +45,8 @@
     "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-standard": "^4.0.0",
     "node-sass": "^4.12.0",
+    "postcss": "^7.0.17",
+    "postcss-cli": "^6.1.3",
     "rimraf": "^2.6.3",
     "watch": "^1.0.2"
   },
