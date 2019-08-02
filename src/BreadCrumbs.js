@@ -8,91 +8,29 @@ const Breadcrumb = ({ children, id, className }) => (
   </nav>
 )
 
-const BreadcrumbItem = ({ active, children, id, className }) => (
+const BreadcrumbItem = ({ active, children, id, className, to }) => (
   <li
     className={`breadcrumb-item${active ? ' active' : ''} ${className || ''}`}
     id={id}
     aria-current={active ? 'page' : false}
   >
-    {children}
+    {active ? children : <Link to={to || ''}>{children}</Link>}
   </li>
 )
 
-const Item = withRouter(
-  ({
-    path,
-    level,
-    levels,
-    pathArray,
-    settings,
-    getLink,
-    match: { params }
-  }) => {
-    if (!path) return null
-    const crumbs = []
-    const splitPath = path.split('/')
-    const pathObj = settings.find(
-      settings => settings.path === `/${splitPath[1]}`
-    )
-    crumbs.push({
-      path: pathObj.path,
-      label: pathObj.label,
-      key: 'a',
-      active: splitPath[2] ? false : levels === level
-    })
-    if (splitPath[2]) {
-      const viewObj = pathObj.views.find(
-        views => views.path === `/${splitPath[2]}`
-      )
-      const pKey = Object.keys(params)[0]
-      crumbs.push({
-        path: pathObj.path + viewObj.path.replace(`:${pKey}`, params[pKey]),
-        label: viewObj.label,
-        key: 'b'
-      })
-    }
-    return crumbs.map(crumb => (
-      <BreadcrumbItem
-        active={levels === level}
-        key={`breadcrumb-${level}${crumb.key}`}
-      >
-        {crumb.active ? (
-          crumb.label
-        ) : (
-          <Link to={getLink(crumb.path, level)}>{crumb.label}</Link>
-        )}
-      </BreadcrumbItem>
-    ))
-  }
-)
-
-const BreadCrumbs = ({
-  label: mainLabel,
-  getLink,
-  boardSwitches,
-  ...props
-}) => {
-  if (!boardSwitches) return null
+const BreadCrumbs = ({ label: mainLabel, getLink, boardSwitches, level }) => {
   return (
     <Breadcrumb id={'admin-dashboard-nav'}>
-      <BreadcrumbItem active={boardSwitches.length === 0}>
-        {boardSwitches.length === 0 ? (
-          mainLabel
-        ) : (
-          <Link to={getLink('', 0)}>{mainLabel}</Link>
-        )}
+      <BreadcrumbItem active={!level} to={getLink('')}>
+        {mainLabel}
       </BreadcrumbItem>
-      {boardSwitches.map((pathObjects, i, { length }) => (
+      {boardSwitches.map((pathObjects, i) => (
         <Switch key={`breadcrumb-switch-${i}`}>
-          {pathObjects.map(({ absolutePath, path, label }, j) => {
+          {pathObjects.map(({ absolutePath, label }, j) => {
             return (
               <Route path={absolutePath} key={`breadcrumb-route-${i}-${j}`}>
-                <BreadcrumbItem active={i + 1 === length}>
-                  {i + 1 === length || !path ? (
-                    label
-                  ) : (
-                    <Link to={getLink(path, length + 1)}>{label}</Link>
-                  )}
+                <BreadcrumbItem active={i + 1 === level} to={getLink(null, i)}>
+                  {label}
                 </BreadcrumbItem>
               </Route>
             )

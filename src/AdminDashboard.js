@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter, Switch, Route } from 'react-router-dom'
 
-import { pathPropType } from './helpers'
+import { pathPropType, cleanBase, cleanUrl } from './helpers'
 import BreadCrumbs from './BreadCrumbs'
 import Board from './Board'
 import { Body, Head } from './BoardParts'
@@ -46,31 +46,25 @@ const boardSwitcher = (settings, base = '') => {
     })
     return pathArray
   }
-  return listPaths(settings, base === '/' ? '' : base).reduce(
-    (pathArray, path) => {
-      const i =
-        path.absolutePath
-          .split('/')
-          .slice(1)
-          .filter(p => p !== base.replace('/', '')).length - 1
-      pathArray[i] ? pathArray[i].push(path) : (pathArray[i] = [path])
-      return pathArray
-    },
-    []
-  )
+  return listPaths(settings, cleanBase(base)).reduce((pathArray, path) => {
+    const i =
+      path.absolutePath
+        .split('/')
+        .slice(1)
+        .filter(p => p !== base.replace('/', '')).length - 1
+    pathArray[i] ? pathArray[i].push(path) : (pathArray[i] = [path])
+    return pathArray
+  }, [])
 }
 
 class AdminDashboard extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      levels: this.getLevels(),
-      aboveTablet: above(768)
+      level: this.getLevel(),
+      aboveTablet: above(768),
+      boardSwitches: boardSwitcher(this.props.settings, this.props.match.url)
     }
-    this.boardSwitches = boardSwitcher(
-      this.props.settings,
-      this.props.match.url
-    )
   }
   componentDidMount () {
     window.addEventListener('resize', this.trackResize)
@@ -80,24 +74,35 @@ class AdminDashboard extends Component {
   }
   componentDidUpdate (prevProps) {
     if (prevProps.location.pathname !== this.props.location.pathname) {
-      this.setState({ levels: this.getLevels() })
+      this.setState({ level: this.getLevel() })
     }
   }
   trackResize = () => {
     this.setState({ aboveTablet: above(768) })
   }
-  getLevels = () =>
-    this.props.location.pathname
-      .replace(this.props.match.url === '/' ? '' : this.props.match.url, '')
-      .split('/').length
-  getLink = path => (this.props.match.url + path).replace(/\/\//, '/')
+  /* Url without base */
+  getUrl = () =>
+    this.props.location.pathname.replace(cleanBase(this.props.match.url), '')
+  /* Zero based current level */
+  getLevel = () => this.getUrl().split('/').length - 1
+  getLink = (path, level) => {
+    const base = this.props.match.url
+    const url = this.getUrl()
+    const urlParts = url.split('/')
+    if (path) {
+      const pathParts = path.split('/')
+      if (!pathParts[0]) return cleanUrl(base + path)
+      const index = urlParts.indexOf(pathParts[0])
+      if (index < 0) return cleanUrl(base + url + '/' + path)
+      return cleanUrl(base + urlParts.slice(0, index).join('/') + '/' + path)
+    }
+    return cleanUrl(base + urlParts.slice(0, level + 2).join('/'))
+  }
   render () {
-    const { aboveTablet, levels, ...state } = this.state
-    const boardSwitches = this.boardSwitches
+    const { boardSwitches, aboveTablet, level } = this.state
     return (
       <Context.Provider
         value={{
-          ...state,
           getLink: this.getLink,
           logo: this.props.branding
             ? this.props.branding.logo
@@ -114,8 +119,13 @@ class AdminDashboard extends Component {
           } }`}
         </style>
         <div id='admin-dashboard'>
-          <BreadCrumbs getLink={this.getLink} {...this.props} {...state} />
-          <Board levels={levels - 1} level={0}>
+          <BreadCrumbs
+            getLink={this.getLink}
+            boardSwitches={boardSwitches}
+            level={level}
+            {...this.props}
+          />
+          <Board levels={level} level={0}>
             <>
               <BoardHead title={this.props.label} />
               <BoardBody>
@@ -131,7 +141,7 @@ class AdminDashboard extends Component {
               {pathObjects.map(
                 ({ absolutePath, component: Component, ...props }, j) => (
                   <Route path={absolutePath} key={`route-${i}-${j}`}>
-                    <Board levels={levels - 1} level={i + 1} {...props}>
+                    <Board levels={level} level={i + 1} {...props}>
                       <Component />
                     </Board>
                   </Route>
@@ -139,7 +149,7 @@ class AdminDashboard extends Component {
               )}
             </Switch>
           ))}
-          {levels === 1 && this.props.children && aboveTablet ? (
+          {level === 1 && this.props.children && aboveTablet ? (
             <Board levels={1} level={1}>
               {this.props.children}
             </Board>
