@@ -33,9 +33,10 @@ const BoardHead = withContext(Head)
 class AdminDashboard extends Component {
   constructor (props) {
     super(props)
+    const pathArray = this.processPathname()
     this.state = {
-      pathArray: this.processPathname(),
-      boardSwitches: this.setBoardSwitches(this.processPathname()),
+      pathArray,
+      boardSwitches: this.setBoardSwitches(pathArray),
       aboveTablet: above(768)
     }
   }
@@ -50,16 +51,17 @@ class AdminDashboard extends Component {
   }
   componentDidUpdate (prevProps) {
     if (prevProps.location.pathname !== this.props.location.pathname) {
+      const pathArray = this.processPathname()
       this.setState({
-        pathArray: this.processPathname(),
-        boardSwitches: this.setBoardSwitches(this.processPathname())
+        pathArray,
+        boardSwitches: this.setBoardSwitches(pathArray)
       })
     }
   }
   processPathname = () => {
     const {
-      location: { pathname },
-      match: { url }
+      location: { pathname }, // always full current url
+      match: { url } // always root of adminDashboard (e.g. ‘/’ or ‘/admin’)
     } = this.props
     const urlPath = url === '/' ? '' : url
     const pathArray = []
@@ -90,8 +92,8 @@ class AdminDashboard extends Component {
     const thisPathArray = []
     pathArray.map(path => {
       path
-        .substring(1)
         .split('/')
+        .slice(1)
         .map((pathPart, i) => {
           const pathObjects = []
           settings.map(settingsPath => {
