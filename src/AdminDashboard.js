@@ -85,7 +85,7 @@ class AdminDashboard extends Component {
     this.props.location.pathname.replace(cleanBase(this.props.match.url), '')
   /* Zero based current level */
   getLevel = () => this.getUrl().split('/').length - 1
-  getLink = (path, level) => {
+  getLink = (path, level, isView) => {
     const base = this.props.match.url
     const url = this.getUrl()
     const urlParts = url.split('/')
@@ -93,7 +93,14 @@ class AdminDashboard extends Component {
       const pathParts = path.split('/')
       if (!pathParts[0]) return cleanUrl(base + path)
       const index = urlParts.indexOf(pathParts[0])
-      if (index < 0) return cleanUrl(base + url + '/' + path)
+      if (index < 0) {
+        if (isView) {
+          return cleanUrl(
+            base + urlParts.slice(0, level + 1).join('/') + '/' + path
+          )
+        }
+        return cleanUrl(base + url + '/' + path)
+      }
       return cleanUrl(base + urlParts.slice(0, index).join('/') + '/' + path)
     }
     return cleanUrl(base + urlParts.slice(0, level + 2).join('/'))
