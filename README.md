@@ -67,13 +67,13 @@ const App = () => (
 ### BoardHead & BoardBody
 
 ```JSX
-import { BoardHead, BoardBody } from '@lefapps/admin-dashboard'
+import { DashboardLink, BoardHead, BoardBody } from '@lefapps/admin-dashboard'
 
 const Users = ({loading, users}) => {
   const userContent = `${users.length} user(s)`
   const userActions = [
-    <button className={'btn'} onClick={goBack} title={'back'}>‹</button>,
-    <button className={'btn btn-lg'} onClick={addUser} title={'Add a new user.'}>+</button>
+    <button className={'btn'} onClick={goBack} title={'back -- used as tooltip'}>‹</button>,
+    <DashboardLink className={'btn btn-lg'} to={'/users/add'} title={'Add a new user'}>+</DashboardLink>
   ]
   return (<>
     <BoardHead title={'Users'} content={userContent} actions={userActions}>
@@ -81,7 +81,7 @@ const Users = ({loading, users}) => {
     </BoardHead>
     <BoardBody loading={loading}>
       <ul>
-        {users.map(user => <li>{user.name}</li>)}
+        {loading ? null : users.map(user => <li>{user.name}</li>)}
       </ul>
     </BoardBody>
   </>
@@ -112,4 +112,5 @@ const App = props => (
 
 ## Todo
 
+* Way to get path to use in DashboardLink.to
 * Labels can accept: string, function or component

@@ -1,6 +1,5 @@
 @charset 'utf-8';
 @import './mixins';
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,400i,700,700i&display=swap');
 
 $fourk: 240em; /* 3840px */
 $threek: 180em; /* 2880px */
@@ -49,19 +48,13 @@ $admin-colors: (
   danger: INDIANRED
 );
 
-@keyframes rotate {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 #admin-dashboard,
-#admin-dashboard__tools {
+#admin-dashboard__tools,
+.admin-dashboard__style {
   @each $var, $color in $admin-colors {
-    --#{$var}: #{$color};
+    @if $var != primary {
+      --#{$var}: #{$color};
+    }
   }
 
   --radius: 0.25rem;

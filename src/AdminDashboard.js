@@ -33,9 +33,10 @@ const BoardHead = withContext(Head)
 class AdminDashboard extends Component {
   constructor (props) {
     super(props)
+    const pathArray = this.processPathname()
     this.state = {
-      pathArray: this.processPathname(),
-      boardSwitches: this.setBoardSwitches(this.processPathname()),
+      pathArray,
+      boardSwitches: this.setBoardSwitches(pathArray),
       aboveTablet: above(768)
     }
   }
@@ -50,16 +51,17 @@ class AdminDashboard extends Component {
   }
   componentDidUpdate (prevProps) {
     if (prevProps.location.pathname !== this.props.location.pathname) {
+      const pathArray = this.processPathname()
       this.setState({
-        pathArray: this.processPathname(),
-        boardSwitches: this.setBoardSwitches(this.processPathname())
+        pathArray,
+        boardSwitches: this.setBoardSwitches(pathArray)
       })
     }
   }
   processPathname = () => {
     const {
-      location: { pathname },
-      match: { url }
+      location: { pathname }, // always full current url
+      match: { url } // always root of adminDashboard (e.g. ‘/’ or ‘/admin’)
     } = this.props
     const urlPath = url === '/' ? '' : url
     const pathArray = []
@@ -90,8 +92,8 @@ class AdminDashboard extends Component {
     const thisPathArray = []
     pathArray.map(path => {
       path
-        .substring(1)
         .split('/')
+        .slice(1)
         .map((pathPart, i) => {
           const pathObjects = []
           settings.map(settingsPath => {
@@ -156,33 +158,38 @@ class AdminDashboard extends Component {
     return urlPath + pathArray.join('') // .replace(/\/\//, '/')
   }
   render () {
-    const { boardSwitches } = this.state
+    const { aboveTablet, ...state } = this.state
+    const { boardSwitches } = state
     return (
       <Context.Provider
         value={{
-          ...this.state,
+          ...state,
           getLink: this.getLink,
           logo: this.props.branding
             ? this.props.branding.logo
             : defaultBranding.logo
         }}
       >
-        <style>{`#admin-dashboard, #admin-dashboard__tools { --primary: ${
-          this.props.branding && this.props.branding.color
-            ? this.props.branding.color
-            : defaultBranding.color
-        } }`}</style>
+        <style>
+          @import
+          'https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,400i,700,700i&display=swap';
+          {`#admin-dashboard, #admin-dashboard__tools { --primary: ${
+            this.props.branding && this.props.branding.color
+              ? this.props.branding.color
+              : defaultBranding.color
+          } }`}
+        </style>
         <div id='admin-dashboard'>
-          <BreadCrumbs getLink={this.getLink} {...this.props} {...this.state} />
+          <BreadCrumbs getLink={this.getLink} {...this.props} {...state} />
           <Board levels={boardSwitches.length} level={0}>
             <>
               <BoardHead title={this.props.label} />
-              <Body>
+              <BoardBody>
                 <MainMenu
                   getLink={this.getLink}
                   settings={this.props.settings}
                 />
-              </Body>
+              </BoardBody>
             </>
           </Board>
           {boardSwitches && boardSwitches.length ? (
@@ -199,7 +206,7 @@ class AdminDashboard extends Component {
                 )}
               </Switch>
             ))
-          ) : this.props.children && this.state.aboveTablet ? (
+          ) : this.props.children && aboveTablet ? (
             <Board levels={1} level={1}>
               {this.props.children}
             </Board>

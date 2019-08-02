@@ -6,7 +6,8 @@
   text-transform: none;
 }
 
-#admin-dashboard {
+#admin-dashboard,
+.admin-dashboard__style {
   .admin-board__body {
     line-height: 1.44;
 
@@ -85,6 +86,14 @@
     dd {
       margin-bottom: 0;
       padding-left: 1em;
+
+      &:empty {
+        &:after {
+          content: '-';
+
+          color: var(--light);
+        }
+      }
     }
   }
 
@@ -108,7 +117,8 @@
       background-color: var(--light) !important;
       border: 0;
 
-      &:hover {
+      &:hover,
+      &:focus {
         color: white !important;
         background-color: var(--#{$var}) !important;
       }
@@ -119,7 +129,8 @@
       background-color: transparent !important;
       border: 0;
 
-      &:hover {
+      &:hover,
+      &:focus {
         color: white !important;
         background-color: var(--#{$var}) !important;
       }
