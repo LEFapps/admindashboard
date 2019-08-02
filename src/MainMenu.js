@@ -8,7 +8,7 @@ const MainMenu = ({ settings, getLink }) => (
       .map(({ path, label }, key) => {
         return (
           <li className={'nav-item'} key={key}>
-            <NavLink className={'nav-link'} to={getLink(path, 0)}>
+            <NavLink className={'nav-link'} to={getLink(path)}>
               {label}
             </NavLink>
           </li>

@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter, Switch, Route } from 'react-router-dom'
 
-import { pathPropType } from './helpers'
+import { pathPropType, cleanBase, cleanUrl } from './helpers'
 import BreadCrumbs from './BreadCrumbs'
 import Board from './Board'
 import { Body, Head } from './BoardParts'
@@ -30,14 +30,40 @@ const above = size => window.matchMedia(`(min-width: ${size}px)`).matches
 const BoardBody = withContext(Body)
 const BoardHead = withContext(Head)
 
+const boardSwitcher = (settings, base = '') => {
+  const listPaths = (paths, url = '', pathArray = []) => {
+    paths.forEach(({ views, ...path }, i, arr) => {
+      const absolutePath = url + path.path
+      pathArray.push({ absolutePath, ...path })
+      const otherPaths = arr.filter(a => absolutePath.indexOf(a.path) < 0)
+      if (views) {
+        views.forEach(view => {
+          const subPath = absolutePath + view.path
+          pathArray.push({ absolutePath: subPath, ...view })
+          listPaths(otherPaths, subPath, pathArray)
+        })
+      }
+    })
+    return pathArray
+  }
+  return listPaths(settings, cleanBase(base)).reduce((pathArray, path) => {
+    const i =
+      path.absolutePath
+        .split('/')
+        .slice(1)
+        .filter(p => p !== base.replace('/', '')).length - 1
+    pathArray[i] ? pathArray[i].push(path) : (pathArray[i] = [path])
+    return pathArray
+  }, [])
+}
+
 class AdminDashboard extends Component {
   constructor (props) {
     super(props)
-    const pathArray = this.processPathname()
     this.state = {
-      pathArray,
-      boardSwitches: this.setBoardSwitches(pathArray),
-      aboveTablet: above(768)
+      level: this.getLevel(),
+      aboveTablet: above(768),
+      boardSwitches: boardSwitcher(this.props.settings, this.props.match.url)
     }
   }
   componentDidMount () {
@@ -46,124 +72,44 @@ class AdminDashboard extends Component {
   componentWillUnmount () {
     window.removeEventListener('resize', this.trackResize)
   }
+  componentDidUpdate (prevProps) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.setState({ level: this.getLevel() })
+    }
+  }
   trackResize = () => {
     this.setState({ aboveTablet: above(768) })
   }
-  componentDidUpdate (prevProps) {
-    if (prevProps.location.pathname !== this.props.location.pathname) {
-      const pathArray = this.processPathname()
-      this.setState({
-        pathArray,
-        boardSwitches: this.setBoardSwitches(pathArray)
-      })
-    }
-  }
-  processPathname = () => {
-    const {
-      location: { pathname }, // always full current url
-      match: { url } // always root of adminDashboard (e.g. ‘/’ or ‘/admin’)
-    } = this.props
-    const urlPath = url === '/' ? '' : url
-    const pathArray = []
-    const pathParts = pathname
-      .replace(urlPath, '')
-      .split('/')
-      .slice(1)
-    pathParts.forEach((p, i) => {
-      if (i % 2 === 0 && !!p) {
-        let newPath = `/${p}`
-        if (pathParts[i + 1]) {
-          newPath += `/${pathParts[i + 1]}`
+  /* Url without base */
+  getUrl = () =>
+    this.props.location.pathname.replace(cleanBase(this.props.match.url), '')
+  /* Zero based current level */
+  getLevel = () => this.getUrl().split('/').length - 1
+  getLink = (path, level, isView) => {
+    const base = this.props.match.url
+    const url = this.getUrl()
+    const urlParts = url.split('/')
+    if (path) {
+      const pathParts = path.split('/')
+      if (!pathParts[0]) return cleanUrl(base + path)
+      const index = urlParts.indexOf(pathParts[0])
+      if (index < 0) {
+        if (isView) {
+          return cleanUrl(
+            base + urlParts.slice(0, level + 1).join('/') + '/' + path
+          )
         }
-        pathArray.push(newPath)
+        return cleanUrl(base + url + '/' + path)
       }
-    })
-    return pathArray
-  }
-  setBoardSwitches = pathArray => {
-    const {
-      settings,
-      match: { url },
-      notFoundComponent
-    } = this.props
-    const urlPath = url === '/' ? '' : url
-    const l = pathArray.length
-    const boardSwitches = []
-    const thisPathArray = []
-    pathArray.map(path => {
-      path
-        .split('/')
-        .slice(1)
-        .map((pathPart, i) => {
-          const pathObjects = []
-          settings.map(settingsPath => {
-            // const thisPathArray = pathArray.slice(0, l - 1)
-            // thisPathArray.push(settingsPath.path)
-            if (thisPathArray.join('').includes(settingsPath.path)) {
-              return
-            }
-            if (i === 0) {
-              pathObjects.push({
-                absolutePath:
-                  urlPath + thisPathArray.join('') + settingsPath.path,
-                path: settingsPath.path,
-                component: settingsPath.component,
-                label: settingsPath.label
-              })
-            }
-            if (i === 1) {
-              settingsPath.views.map(view => {
-                const thisViewPath = pathArray
-                  .join('')
-                  .replace(path, settingsPath.path + view.path)
-                pathObjects.push({
-                  absolutePath: urlPath + thisViewPath,
-                  path: settingsPath.path + view.path,
-                  component: view.component,
-                  label: view.label
-                })
-              })
-            }
-          })
-          pathObjects.push({
-            component: notFoundComponent,
-            label: '404'
-          })
-          boardSwitches.push(pathObjects)
-        })
-      thisPathArray.push(path)
-    })
-
-    return boardSwitches
-  }
-  getLink = (path, level) => {
-    let { pathArray } = this.state
-    // replace all higher levels
-    pathArray = pathArray.slice(0, level)
-    // check if path already exists
-    const i = pathArray.findIndex(el => el.includes(path.split('/')[1]))
-    if (i > -1) {
-      pathArray = pathArray.slice(0, i)
+      return cleanUrl(base + urlParts.slice(0, index).join('/') + '/' + path)
     }
-    // remove last path if it's a single
-    const l = pathArray.length
-    if (l > 0 && pathArray[l - 1].split('/').length < 3) {
-      pathArray = pathArray.slice(0, l - 2)
-    }
-    pathArray.push(path)
-    const {
-      match: { path: url }
-    } = this.props
-    const urlPath = url === '/' ? '' : url
-    return urlPath + pathArray.join('') // .replace(/\/\//, '/')
+    return cleanUrl(base + urlParts.slice(0, level + 2).join('/'))
   }
   render () {
-    const { aboveTablet, ...state } = this.state
-    const { boardSwitches } = state
+    const { boardSwitches, aboveTablet, level } = this.state
     return (
       <Context.Provider
         value={{
-          ...state,
           getLink: this.getLink,
           logo: this.props.branding
             ? this.props.branding.logo
@@ -180,8 +126,13 @@ class AdminDashboard extends Component {
           } }`}
         </style>
         <div id='admin-dashboard'>
-          <BreadCrumbs getLink={this.getLink} {...this.props} {...state} />
-          <Board levels={boardSwitches.length} level={0}>
+          <BreadCrumbs
+            getLink={this.getLink}
+            boardSwitches={boardSwitches}
+            level={level}
+            {...this.props}
+          />
+          <Board levels={level} level={0}>
             <>
               <BoardHead title={this.props.label} />
               <BoardBody>
@@ -192,21 +143,20 @@ class AdminDashboard extends Component {
               </BoardBody>
             </>
           </Board>
-          {boardSwitches && boardSwitches.length ? (
-            boardSwitches.map((pathObjects, i, { length }) => (
-              <Switch key={`board-switch-${i}`}>
-                {pathObjects.map(
-                  ({ absolutePath, component: Component, ...props }, j) => (
-                    <Route path={absolutePath} key={`route-${i}-${j}`}>
-                      <Board levels={length} level={i + 1} {...props}>
-                        <Component />
-                      </Board>
-                    </Route>
-                  )
-                )}
-              </Switch>
-            ))
-          ) : this.props.children && aboveTablet ? (
+          {boardSwitches.map((pathObjects, i) => (
+            <Switch key={`board-switch-${i}`}>
+              {pathObjects.map(
+                ({ absolutePath, component: Component, ...props }, j) => (
+                  <Route path={absolutePath} key={`route-${i}-${j}`}>
+                    <Board levels={level} level={i + 1} {...props}>
+                      <Component />
+                    </Board>
+                  </Route>
+                )
+              )}
+            </Switch>
+          ))}
+          {level === 1 && this.props.children && aboveTablet ? (
             <Board levels={1} level={1}>
               {this.props.children}
             </Board>
