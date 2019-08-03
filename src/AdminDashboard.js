@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter, Switch, Route } from 'react-router-dom'
+// import { Provider as AlertProvider } from 'react-alert'
 
 import { pathPropType, cleanBase, cleanUrl } from './helpers'
+// import { alertOptions } from './Alert'
 import BreadCrumbs from './BreadCrumbs'
 import Board from './Board'
 import { Body, Head } from './BoardParts'
