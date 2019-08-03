@@ -107,6 +107,8 @@
     }
 
     .admin-board__head-actions {
+      position: relative;
+
       margin-top: -1em;
       margin-bottom: -2.5em;
 
@@ -233,12 +235,30 @@
       .admin-board__head {
         background-color: white;
 
+        &:after {
+          content: '';
+
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          z-index: 1;
+
+          height: 4em;
+
+          background-image: linear-gradient(white, rgba(white, 0));
+
+          pointer-events: none;
+        }
+
         .admin-board__head-title,
         .admin-board__head-content {
           color: var(--primary);
         }
 
         .admin-board__head-actions {
+          z-index: 2;
+
           .btn {
             color: white;
             background-color: var(--primary);
