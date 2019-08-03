@@ -1,0 +1,76 @@
+#admin-dashboard,
+.admin-dashboard__style {
+  @each $var, $color in $admin-colors {
+    .alert.alert-#{$var} {
+      color: var(--#{$var}) !important;
+      background-color: var(--light) !important;
+      border-color: var(--#{$var}) !important;
+      border-width: 0 !important;
+      border-left-width: 0.25em !important;
+      border-radius: 0 !important;
+    }
+  }
+
+  .alert.react-alert {
+    display: flex;
+    align-items: center;
+
+    padding-left: 4em;
+
+    overflow: hidden;
+
+    background-color: white !important;
+    box-shadow: $admin-shadow;
+    border-width: 0 !important;
+    border-radius: var(--radius) !important;
+
+    &:before {
+      content: '';
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+
+      width: 4em;
+
+      border-color: inherit;
+      border-left-width: 0;
+      border-right-width: 4em;
+      border-right-color: transparent;
+      border-top-width: 50vh;
+      border-bottom-width: 0;
+      border-style: solid;
+    }
+
+    > svg:first-of-type {
+      z-index: 4;
+
+      margin-left: -1.5em;
+      margin-right: 0.5em;
+
+      color: white;
+
+      font-size: 2em;
+    }
+
+    .alert-message {
+      padding: 0 1em;
+    }
+
+    .close {
+      margin-left: auto;
+
+      opacity: 1;
+
+      font-size: 1em;
+
+      &:hover,
+      &:focus,
+      &:active {
+        opacity: 1;
+        color: var(--text);
+      }
+    }
+  }
+}
