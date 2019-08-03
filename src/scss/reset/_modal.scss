@@ -1,0 +1,43 @@
+#admin-dashboard,
+.admin-dashboard__style {
+  .modal-backdrop {
+    background-color: var(--light);
+
+    &.show {
+      opacity: 0.8;
+      -webkit-backdrop-filter: blur(0.25em);
+      backdrop-filter: blur(0.25em);
+    }
+  }
+
+  .modal-content {
+    border: 0;
+    border-radius: var(--radius);
+    box-shadow: $admin-shadow;
+
+    .modal-header {
+      color: white !important;
+      background-color: var(--primary);
+      border-bottom-width: 0;
+      align-items: center;
+
+      * {
+        color: inherit;
+      }
+
+      .close {
+        width: 1.2em;
+        height: 1.2em;
+        margin: 0;
+        padding: 0;
+
+        color: var(--primary);
+        background-color: white;
+        border-radius: 0.6em;
+        opacity: 1;
+
+        text-align: center;
+      }
+    }
+  }
+}
