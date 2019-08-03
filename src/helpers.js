@@ -11,6 +11,6 @@ const pathPropType = (props, propName, componentName) => {
 }
 
 const cleanBase = path => (path === '/' ? '' : path)
-const cleanUrl = path => path.replace(/\/\//, '/')
+const cleanUrl = path => path.replace(/\/\//g, '/')
 
 export { pathPropType, cleanBase, cleanUrl }

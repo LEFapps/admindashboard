@@ -82,7 +82,12 @@ class AdminDashboard extends Component {
   }
   /* Url without base */
   getUrl = () =>
-    this.props.location.pathname.replace(cleanBase(this.props.match.url), '')
+    '/' +
+    this.props.location.pathname
+      .replace(cleanBase(this.props.match.url), '')
+      .split('/')
+      .filter(p => p)
+      .join('/')
   /* Zero based current level */
   getLevel = () => cleanBase(this.getUrl()).split('/').length - 1
   getLink = (path, level, isView) => {
