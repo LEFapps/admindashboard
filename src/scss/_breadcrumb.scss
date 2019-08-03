@@ -76,6 +76,22 @@
 
     background-color: white;
 
+    .breadcrumb-back {
+      margin-right: 1em;
+
+      color: var(--primary);
+
+      font-size: 1.44em;
+      line-height: 1;
+
+      &[disabled] {
+        color: var(--light);
+
+        cursor: default;
+        pointer-events: none;
+      }
+    }
+
     .breadcrumb-item {
       position: relative;
 

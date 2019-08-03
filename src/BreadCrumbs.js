@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Switch, Route, withRouter } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Breadcrumb = ({ children, id, className }) => (
   <nav aria-label='breadcrumb' id={id} className={className}>
@@ -21,6 +22,13 @@ const BreadcrumbItem = ({ active, children, id, className, to }) => (
 const BreadCrumbs = ({ label: mainLabel, getLink, boardSwitches, level }) => {
   return (
     <Breadcrumb id={'admin-dashboard-nav'}>
+      <Link
+        className={'breadcrumb-back'}
+        disabled={!level}
+        to={getLink(false, level - 2)}
+      >
+        <FontAwesomeIcon icon='arrow-left' />
+      </Link>
       <BreadcrumbItem active={!level} to={getLink('')}>
         {mainLabel}
       </BreadcrumbItem>
