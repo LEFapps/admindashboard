@@ -45,7 +45,8 @@ $admin-colors: (
   info: CORNFLOWERBLUE,
   success: SEAGREEN,
   warning: GOLD,
-  danger: INDIANRED
+  danger: INDIANRED,
+  error: INDIANRED
 );
 
 #admin-dashboard,
@@ -91,3 +92,4 @@ $admin-colors: (
 @import './reset/form';
 @import './reset/card';
 @import './reset/modal';
+@import './reset/alert';

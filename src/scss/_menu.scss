@@ -1,10 +1,16 @@
 #admin-menu {
   .nav-link {
+    padding: 0.5em 1em;
     color: var(--primary);
-    border-bottom: 1px solid var(--light);
 
     font-weight: bold;
     font-size: 1.2em;
+
+    transition: 0.3s;
+
+    &:not(.active):hover {
+      color: var(--text);
+    }
 
     &.active {
       color: var(--text);
