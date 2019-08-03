@@ -129,7 +129,7 @@
         text-align: center;
         line-height: 2.5;
 
-        &:after {
+        &[title]:after {
           content: attr(title);
 
           position: absolute;
