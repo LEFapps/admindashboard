@@ -214,3 +214,16 @@ Level is also stored in the state of the AdminDashboard component.
 ## Todo
 
 * Labels can accept: string, function or component
+
+## Notes
+
+### Icons
+
+The Alert components use the following [Fontawesome](https://www.npmjs.com/package/@fortawesome/react-fontawesome) Icons by default. Please add them to your library to prevent errors.
+
+```YAML
+info: 'info-circle'
+danger: 'exclamation-circle'
+warning: 'question-circle'
+success: 'check-circle'
+```

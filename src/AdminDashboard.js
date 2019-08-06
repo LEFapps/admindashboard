@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter, Switch, Route } from 'react-router-dom'
+import { Provider as AlertProvider } from 'react-alert'
 
 import { pathPropType, cleanBase, cleanUrl } from './helpers'
+import { alertOptions } from './Alert'
 import BreadCrumbs from './BreadCrumbs'
 import Board from './Board'
 import { Body, Head } from './BoardParts'
@@ -86,7 +88,7 @@ class AdminDashboard extends Component {
     this.props.location.pathname
       .replace(cleanBase(this.props.match.url), '')
       .split('/')
-      .filter(p => p)
+      .filter(p => !!p)
       .join('/')
   /* Zero based current level */
   getLevel = () => cleanBase(this.getUrl()).split('/').length - 1
@@ -113,63 +115,65 @@ class AdminDashboard extends Component {
   render () {
     const { boardSwitches, aboveTablet, level } = this.state
     return (
-      <Context.Provider
-        value={{
-          getLink: this.getLink,
-          logo: this.props.branding
-            ? this.props.branding.logo
-            : defaultBranding.logo
-        }}
-      >
-        <style>
-          @import
-          'https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,400i,700,700i&display=swap';
-          {`#admin-dashboard, #admin-dashboard__tools { --primary: ${
-            this.props.branding && this.props.branding.color
-              ? this.props.branding.color
-              : defaultBranding.color
-          } }`}
-        </style>
-        <div id='admin-dashboard'>
-          <BreadCrumbs
-            getLink={this.getLink}
-            boardSwitches={boardSwitches}
-            level={level}
-            {...this.props}
-          />
-          <Board levels={level} level={0}>
-            <>
-              <BoardHead title={this.props.label} />
-              <BoardBody>
-                <MainMenu
-                  getLink={this.getLink}
-                  settings={this.props.settings}
-                />
-              </BoardBody>
-            </>
-          </Board>
-          {boardSwitches.map((pathObjects, i) =>
-            i > level - 1 ? null : (
-              <Switch key={`board-switch-${i}`}>
-                {pathObjects.map(
-                  ({ absolutePath, component: Component, ...props }, j) => (
-                    <Route path={absolutePath} key={`route-${i}-${j}`}>
-                      <Board levels={level} level={i + 1} {...props}>
-                        <Component />
-                      </Board>
-                    </Route>
-                  )
-                )}
-              </Switch>
-            )
-          )}
-          {!level && this.props.children && aboveTablet ? (
-            <Board levels={1} level={1}>
-              {this.props.children}
+      <AlertProvider {...alertOptions}>
+        <Context.Provider
+          value={{
+            getLink: this.getLink,
+            logo: this.props.branding
+              ? this.props.branding.logo
+              : defaultBranding.logo
+          }}
+        >
+          <style>
+            @import
+            'https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,400i,700,700i&display=swap';
+            {`#admin-dashboard, #admin-dashboard__tools { --primary: ${
+              this.props.branding && this.props.branding.color
+                ? this.props.branding.color
+                : defaultBranding.color
+            } }`}
+          </style>
+          <div id='admin-dashboard'>
+            <BreadCrumbs
+              getLink={this.getLink}
+              boardSwitches={boardSwitches}
+              level={level}
+              {...this.props}
+            />
+            <Board levels={level} level={0}>
+              <>
+                <BoardHead title={this.props.label} />
+                <BoardBody>
+                  <MainMenu
+                    getLink={this.getLink}
+                    settings={this.props.settings}
+                  />
+                </BoardBody>
+              </>
             </Board>
-          ) : null}
-        </div>
-      </Context.Provider>
+            {boardSwitches.map((pathObjects, i) =>
+              i > level - 1 ? null : (
+                <Switch key={`board-switch-${i}`}>
+                  {pathObjects.map(
+                    ({ absolutePath, component: Component, ...props }, j) => (
+                      <Route path={absolutePath} key={`route-${i}-${j}`}>
+                        <Board levels={level} level={i + 1} {...props}>
+                          <Component />
+                        </Board>
+                      </Route>
+                    )
+                  )}
+                </Switch>
+              )
+            )}
+            {!level && this.props.children && aboveTablet ? (
+              <Board levels={1} level={1}>
+                {this.props.children}
+              </Board>
+            ) : null}
+          </div>
+        </Context.Provider>
+      </AlertProvider>
     )
   }
 }
