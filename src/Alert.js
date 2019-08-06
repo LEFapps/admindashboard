@@ -25,7 +25,7 @@ const options = {
   position: positions.BOTTOM_LEFT,
   timeout: 10000,
   offset: '2em',
-  transition: transitions.SCALE
+  transition: transitions.FADE
 }
 
 export { Template as AlertTemplate, options as alertOptions }
