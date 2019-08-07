@@ -23,10 +23,16 @@ const Template = ({ style, options: { type }, message, close }) => (
 const options = {
   template: Template,
   position: positions.BOTTOM_LEFT,
-  timeout: 10000,
+  timeout: 8000,
   offset: '2em',
   transition: transitions.FADE
 }
 
-export { Template as AlertTemplate, options as alertOptions }
+const withAlert = WrappedComponent => props => (
+  <Provider {...options}>
+    <WrappedComponent {...props} />
+  </Provider>
+)
+
+export { Template as AlertTemplate, options as alertOptions, withAlert }
 export default props => <Provider {...options} {...props} />

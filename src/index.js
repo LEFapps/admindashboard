@@ -1,8 +1,15 @@
 import AdminDashboard, { BoardHead, BoardBody } from './AdminDashboard'
 import { Tools as AdminTools } from './BoardParts'
 import DashboardLink from './DashboardLink'
+import AdminAlert, { withAlert } from './Alert'
 import './dashboard.css'
-import AdminAlert from './Alert'
 
 export default AdminDashboard
-export { DashboardLink, BoardHead, BoardBody, AdminTools, AdminAlert }
+export {
+  DashboardLink,
+  BoardHead,
+  BoardBody,
+  AdminTools,
+  AdminAlert,
+  withAlert
+}
