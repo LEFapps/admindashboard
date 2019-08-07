@@ -145,13 +145,26 @@ class AdminDashboard extends Component {
           <style>
             @import
             'https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,400i,700,700i&display=swap';
-            {`#admin-dashboard, #admin-dashboard__tools { --primary: ${
-              this.props.branding && this.props.branding.color
-                ? this.props.branding.color
-                : defaultBranding.color
-            } }`}
+            {`#admin-dashboard,
+            #admin-dashboard__tools {
+              --primary: ${
+      this.props.branding && this.props.branding.color
+        ? this.props.branding.color
+        : defaultBranding.color
+      } ;
+              --primaryDark: ${
+      this.props.branding && this.props.branding.colorDark
+        ? this.props.branding.colorDark
+        : this.props.branding && this.props.branding.color
+          ? this.props.branding.color
+          : defaultBranding.color
+      } ;
+            }`}
           </style>
-          <div id='admin-dashboard'>
+          <div
+            id='admin-dashboard'
+            className={this.props.darkMode ? 'dark-mode' : ''}
+          >
             <BreadCrumbs
               getLink={this.getLink}
               boardSwitches={boardSwitches}
@@ -218,6 +231,7 @@ AdminDashboard.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   branding: PropTypes.shape({
     color: PropTypes.string,
+    colorDark: PropTypes.string,
     logo: PropTypes.string
   })
 }

@@ -17,7 +17,7 @@
 
   padding: 0;
 
-  background-color: white;
+  background-color: var(--snow);
   box-shadow: var(--shadow);
   box-shadow: $admin-shadow;
 
@@ -51,7 +51,7 @@
 
     width: 2em;
 
-    background-image: linear-gradient(to right, white, rgba(white, 0));
+    background-image: linear-gradient(to right, var(--snow), transparent);
   }
 
   &:before {
@@ -74,7 +74,7 @@
     flex-wrap: nowrap;
     overflow-y: auto;
 
-    background-color: white;
+    background-color: var(--snow);
 
     .breadcrumb-back {
       margin-right: 1em;
@@ -100,7 +100,7 @@
 
       overflow: hidden;
 
-      color: white;
+      color: var(--snow);
       background-color: var(--primary);
       border-radius: 0.3em;
       white-space: nowrap;
@@ -133,7 +133,7 @@
           height: 1.2em;
 
           background-color: var(--primary);
-          border: 0.25em solid white;
+          border: 0.25em solid var(--snow);
           border-left-width: 0;
           border-bottom-width: 0;
           border-radius: 0.2em;

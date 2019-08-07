@@ -129,7 +129,7 @@
       &.active {
         z-index: 2;
 
-        color: white;
+        color: var(--snow);
         // transform: scale(1.333);
 
         .page-link {
