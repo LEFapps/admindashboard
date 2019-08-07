@@ -78,6 +78,25 @@
         border-radius: 0;
       }
     }
+
+    .custom-control-input {
+      &:not(:checked) {
+        ~ .custom-control-label {
+          &:before {
+            background-color: var(--light);
+            border-color: var(--light);
+          }
+        }
+      }
+      &:checked {
+        ~ .custom-control-label {
+          &:before {
+            background-color: var(--primary);
+            border-color: var(--primary);
+          }
+        }
+      }
+    }
   }
 
   form,
