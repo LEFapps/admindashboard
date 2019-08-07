@@ -1,5 +1,5 @@
 import React from 'react'
-import { transitions, positions } from 'react-alert'
+import { transitions, positions, Provider } from 'react-alert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const icons = {
@@ -29,3 +29,4 @@ const options = {
 }
 
 export { Template as AlertTemplate, options as alertOptions }
+export default props => <Provider {...options} {...props} />
