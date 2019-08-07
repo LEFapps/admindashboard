@@ -22,7 +22,7 @@
     align-items: flex-end;
     justify-content: flex-start;
 
-    transition: 0.3s;
+    transition: $admin-timing / 2;
 
     &:hover,
     &:focus {
@@ -50,7 +50,7 @@
       line-height: 2;
       text-align: center;
 
-      transition: opacity 0.3s;
+      transition: opacity $admin-timing / 2;
     }
 
     > * {

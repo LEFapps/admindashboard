@@ -37,6 +37,7 @@ $grid-breakpoints: (
 );
 
 $admin-shadow: 0.1875rem 0.375rem 1rem rgba(black, 0.16);
+$admin-timing: 0.5s;
 $admin-colors: (
   primary: var(--primary),
   secondary: LIGHTSLATEGRAY,

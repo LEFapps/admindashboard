@@ -49,7 +49,7 @@
 
     font-family: 'Montserrat', sans-serif;
 
-    transition: 0.25s ease-in;
+    transition: $admin-timing ease-in 0s;
 
     @include above($tablet) {
       margin-bottom: 3em;
@@ -197,8 +197,8 @@
       border-radius: 1em;
       opacity: 0;
 
-      transition: opacity 0.3s ease-in-out 0.3s;
-      animation: rotate 0.5s linear 0s infinite forwards;
+      transition: opacity $admin-timing / 2 ease-in-out $admin-timing / 2;
+      animation: rotate $admin-timing linear 0s infinite forwards;
 
       pointer-events: none;
     }

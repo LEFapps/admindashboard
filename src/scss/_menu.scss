@@ -6,7 +6,7 @@
     font-weight: bold;
     font-size: 1.2em;
 
-    transition: 0.3s;
+    transition: $admin-timing / 2;
 
     &:not(.active):hover {
       color: var(--text);
