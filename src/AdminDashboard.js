@@ -49,12 +49,16 @@ const boardSwitcher = (settings, base = '') => {
     return pathArray
   }
   return listPaths(settings, cleanBase(base)).reduce((pathArray, path) => {
-    const i =
-      path.absolutePath
-        .split('/')
-        .slice(1)
-        .filter(p => p !== base.replace('/', '')).length - 1
-    pathArray[i] ? pathArray[i].push(path) : (pathArray[i] = [path])
+    const abs = path.absolutePath
+      .split('/')
+      .slice(1)
+      .filter(p => p !== base.replace('/', ''))
+    const scope = abs.filter((x, y) => !(y % 2)).join('/') || '/'
+    const i = abs.length - 1
+    if (pathArray[i]) {
+      if (pathArray[i][scope]) pathArray[i][scope].push(path)
+      else pathArray[i][scope] = [path]
+    } else pathArray.push({ [`${scope}`]: [path] })
     return pathArray
   }, [])
 }
@@ -80,7 +84,10 @@ class AdminDashboard extends Component {
     }
   }
   trackResize = () => {
-    this.setState({ aboveTablet: above(768) })
+    const resized = above(768)
+    if (this.state.aboveTablet !== resized) {
+      this.setState({ aboveTablet: above(768) })
+    }
   }
   /* Url without base */
   getUrl = () =>
@@ -92,6 +99,17 @@ class AdminDashboard extends Component {
       .join('/')
   /* Zero based current level */
   getLevel = () => cleanBase(this.getUrl()).split('/').length - 1
+  getScope = () =>
+    this.getUrl()
+      .split('/')
+      .slice(1)
+      .map((v, i, a) =>
+        a
+          .filter((x, y) => !(y % 2))
+          .filter((b, z) => z < i)
+          .concat(v || '/')
+          .join('/')
+      )
   getLink = (path, level, isView) => {
     const base = this.props.match.url
     const url = this.getUrl()
@@ -113,6 +131,7 @@ class AdminDashboard extends Component {
     return cleanUrl(base + urlParts.slice(0, level + 2).join('/'))
   }
   render () {
+    const scope = this.getScope()
     const { boardSwitches, aboveTablet, level } = this.state
     return (
       <AlertProvider {...alertOptions}>
@@ -138,6 +157,7 @@ class AdminDashboard extends Component {
               getLink={this.getLink}
               boardSwitches={boardSwitches}
               level={level}
+              scope={scope}
               {...this.props}
             />
             <Board levels={level} level={0}>
@@ -151,21 +171,19 @@ class AdminDashboard extends Component {
                 </BoardBody>
               </>
             </Board>
-            {boardSwitches.map((pathObjects, i) =>
-              i > level - 1 ? null : (
-                <Switch key={`board-switch-${i}`}>
-                  {pathObjects.map(
-                    ({ absolutePath, component: Component, ...props }, j) => (
-                      <Route path={absolutePath} key={`route-${i}-${j}`}>
-                        <Board levels={level} level={i + 1} {...props}>
-                          <Component />
-                        </Board>
-                      </Route>
-                    )
-                  )}
-                </Switch>
-              )
-            )}
+            {boardSwitches.slice(0, level).map((pathObjects, i) => (
+              <Switch key={`board-switch-${i}`}>
+                {(pathObjects[scope[Math.floor(i / 2)]] || []).map(
+                  ({ absolutePath, component: Component, ...props }, j) => (
+                    <Route path={absolutePath} key={`route-${i}-${j}`}>
+                      <Board levels={level} level={i + 1} {...props}>
+                        <Component />
+                      </Board>
+                    </Route>
+                  )
+                )}
+              </Switch>
+            ))}
             {!level && this.props.children && aboveTablet ? (
               <Board levels={1} level={1}>
                 {this.props.children}

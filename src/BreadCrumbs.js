@@ -19,7 +19,13 @@ const BreadcrumbItem = ({ active, children, id, className, to }) => (
   </li>
 )
 
-const BreadCrumbs = ({ label: mainLabel, getLink, boardSwitches, level }) => {
+const BreadCrumbs = ({
+  label: mainLabel,
+  getLink,
+  boardSwitches,
+  level,
+  scope
+}) => {
   return (
     <Breadcrumb id={'admin-dashboard-nav'}>
       <Link
@@ -34,15 +40,15 @@ const BreadCrumbs = ({ label: mainLabel, getLink, boardSwitches, level }) => {
       </BreadcrumbItem>
       {boardSwitches.map((pathObjects, i) => (
         <Switch key={`breadcrumb-switch-${i}`}>
-          {pathObjects.map(({ absolutePath, label }, j) => {
-            return (
+          {(pathObjects[scope[Math.floor(i / 2)]] || []).map(
+            ({ absolutePath, label }, j) => (
               <Route path={absolutePath} key={`breadcrumb-route-${i}-${j}`}>
                 <BreadcrumbItem active={i + 1 === level} to={getLink(null, i)}>
                   {label}
                 </BreadcrumbItem>
               </Route>
             )
-          })}
+          )}
         </Switch>
       ))}
     </Breadcrumb>
