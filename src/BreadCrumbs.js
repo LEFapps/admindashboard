@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Breadcrumb = ({ children, id, className }) => (
@@ -40,15 +40,13 @@ const BreadCrumbs = ({
       </BreadcrumbItem>
       {boardSwitches.map((pathObjects, i) => (
         <Switch key={`breadcrumb-switch-${i}`}>
-          {(pathObjects[scope[Math.floor(i / 2)]] || []).map(
-            ({ absolutePath, label }, j) => (
-              <Route path={absolutePath} key={`breadcrumb-route-${i}-${j}`}>
-                <BreadcrumbItem active={i + 1 === level} to={getLink(null, i)}>
-                  {label}
-                </BreadcrumbItem>
-              </Route>
-            )
-          )}
+          {(pathObjects[scope[i]] || []).map(({ absolutePath, label }, j) => (
+            <Route path={absolutePath} key={`breadcrumb-route-${i}-${j}`}>
+              <BreadcrumbItem active={i + 1 === level} to={getLink(null, i)}>
+                {label}
+              </BreadcrumbItem>
+            </Route>
+          ))}
         </Switch>
       ))}
     </Breadcrumb>

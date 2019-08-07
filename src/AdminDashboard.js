@@ -106,8 +106,7 @@ class AdminDashboard extends Component {
       .map((v, i, a) =>
         a
           .filter((x, y) => !(y % 2))
-          .filter((b, z) => z < i)
-          .concat(v || '/')
+          .slice(0, Math.floor(i / 2) + 1)
           .join('/')
       )
   getLink = (path, level, isView) => {
@@ -173,7 +172,7 @@ class AdminDashboard extends Component {
             </Board>
             {boardSwitches.slice(0, level).map((pathObjects, i) => (
               <Switch key={`board-switch-${i}`}>
-                {(pathObjects[scope[Math.floor(i / 2)]] || []).map(
+                {(pathObjects[scope[i]] || []).map(
                   ({ absolutePath, component: Component, ...props }, j) => (
                     <Route path={absolutePath} key={`route-${i}-${j}`}>
                       <Board levels={level} level={i + 1} {...props}>
