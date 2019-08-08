@@ -3,10 +3,11 @@
   .card {
     border-color: var(--light);
     border-radius: var(--radius);
+    background-color: var(--snow);
 
     .card-header {
       color: var(--text);
-      background-color: white;
+      background-color: var(--snow);
       border-bottom-color: var(--light);
     }
   }

@@ -16,7 +16,7 @@
     box-shadow: $admin-shadow;
 
     .modal-header {
-      color: white !important;
+      color: var(--snow) !important;
       background-color: var(--primary);
       border-bottom-width: 0;
       align-items: center;
@@ -32,7 +32,7 @@
         padding: 0;
 
         color: var(--primary);
-        background-color: white;
+        background-color: var(--snow);
         border-radius: 0.6em;
         opacity: 1;
 

@@ -120,7 +120,7 @@
 
       &:hover,
       &:focus {
-        color: white !important;
+        color: var(--snow) !important;
         background-color: var(--#{$var}) !important;
       }
     }
@@ -132,13 +132,13 @@
 
       &:hover,
       &:focus {
-        color: white !important;
+        color: var(--snow) !important;
         background-color: var(--#{$var}) !important;
       }
     }
 
     .badge.badge-#{$var} {
-      color: white !important;
+      color: var(--snow) !important;
       background-color: var(--#{$var}) !important;
       border-color: var(--#{$var});
     }

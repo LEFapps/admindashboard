@@ -47,15 +47,26 @@ $admin-colors: (
   success: SEAGREEN,
   warning: GOLD,
   danger: INDIANRED,
-  error: INDIANRED
+  error: INDIANRED,
+  snow: WHITE
+);
+
+$admin-colors__dark: (
+  primary: var(--primaryDark) !important,
+  secondary: ROSYBROWN !important,
+  light: #333 !important,
+  text: WHITESMOKE !important,
+  snow: #222 !important
 );
 
 #admin-dashboard,
 #admin-dashboard__tools,
 .admin-dashboard__style {
-  @each $var, $color in $admin-colors {
-    @if $var != primary {
-      --#{$var}: #{$color};
+  &:not(.dark-mode) {
+    @each $var, $color in $admin-colors {
+      @if $var != primary {
+        --#{$var}: #{$color};
+      }
     }
   }
 
@@ -67,6 +78,14 @@ $admin-colors: (
 
   font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
+
+  &.dark-mode {
+    @each $var, $color in $admin-colors__dark {
+      @if $var != primary {
+        --#{$var}: #{$color};
+      }
+    }
+  }
 
   * {
     box-sizing: inherit;
@@ -80,6 +99,10 @@ $admin-colors: (
     color: var(--primary);
     background-color: var(--light);
   }
+}
+
+#admin-dashboard {
+  background-color: var(--snow);
 }
 
 @import './layout';
