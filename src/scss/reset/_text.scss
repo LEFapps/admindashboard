@@ -118,10 +118,17 @@
       background-color: var(--light) !important;
       border: 0;
 
-      &:hover,
-      &:focus {
-        color: var(--snow) !important;
-        background-color: var(--#{$var}) !important;
+      &:not(:disabled) {
+        &:hover,
+        &:focus,
+        &.active {
+          color: var(--snow) !important;
+          background-color: var(--#{$var}) !important;
+        }
+      }
+
+      &:disabled {
+        background-colo: var(--secondary);
       }
     }
 
@@ -130,10 +137,17 @@
       background-color: transparent !important;
       border: 0;
 
-      &:hover,
-      &:focus {
-        color: var(--snow) !important;
-        background-color: var(--#{$var}) !important;
+      &:not(:disabled) {
+        &:hover,
+        &:focus,
+        &.active {
+          color: var(--snow) !important;
+          background-color: var(--#{$var}) !important;
+        }
+      }
+
+      &:disabled {
+        color: var(--secondary);
       }
     }
 

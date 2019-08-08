@@ -1,7 +1,7 @@
 #admin-dashboard,
 .admin-dashboard__style {
   .form-group,
-  .adminlist-filters {
+  .adminlist {
     label:not(.custom-control-label) {
       margin: 0 0 0.5em;
 
@@ -60,9 +60,19 @@
     }
 
     .input-group {
-      overflow: hidden;
+      > * {
+        border-radius: 0;
 
-      border-radius: var(--radius);
+        &:first-child {
+          border-top-left-radius: var(--radius) !important;
+          border-bottom-left-radius: var(--radius) !important;
+        }
+
+        &:last-child {
+          border-top-right-radius: var(--radius) !important;
+          border-bottom-right-radius: var(--radius) !important;
+        }
+      }
 
       .input-group-append,
       .input-group-prepend {
