@@ -97,6 +97,16 @@
         }
       }
     }
+
+    .custom-file-label {
+      color: var(--dark);
+      background-color: var(--light);
+      border-color: var(--light);
+
+      &:after {
+        background-color: var(--primary);
+      }
+    }
   }
 
   form,
@@ -116,12 +126,20 @@
         cursor: pointer;
       }
     }
+
+    .input-group {
+      .form-control,
+      .btn {
+        border-radius: 0 !important;
+      }
+    }
   }
 
   .md-preview {
     > .text.md-preview-content {
       position: relative;
 
+      max-height: 70vh;
       padding: 0.75em 0.5em;
 
       color: var(--text);
@@ -130,6 +148,7 @@
 
       overflow: auto;
       -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
 
       font-size: 0.875rem;
 

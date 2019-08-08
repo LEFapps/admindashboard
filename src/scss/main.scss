@@ -52,11 +52,11 @@ $admin-colors: (
 );
 
 $admin-colors__dark: (
-  primary: var(--primaryDark),
-  secondary: ROSYBROWN,
-  light: #333,
-  text: WHITESMOKE,
-  snow: #222
+  primary: var(--primaryDark) !important,
+  secondary: ROSYBROWN !important,
+  light: #333 !important,
+  text: WHITESMOKE !important,
+  snow: #222 !important
 );
 
 #admin-dashboard,

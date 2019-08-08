@@ -25,6 +25,7 @@
     height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
 
     display: flex;
     flex-direction: column;
