@@ -227,7 +227,7 @@ AdminDashboard.propTypes = {
     )
   ).isRequired,
   children: PropTypes.element,
-  notFoundComponent: PropTypes.func.isRequired,
+  notFoundComponent: PropTypes.element.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   branding: PropTypes.shape({
     color: PropTypes.string,

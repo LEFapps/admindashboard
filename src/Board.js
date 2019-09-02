@@ -7,6 +7,7 @@ const boardView = (l, i) =>
   l === 0 ? 'small' : l === i ? 'full' : l - 1 === i ? 'small' : 'hidden'
 
 const Board = ({ levels, level, children, ...props }) => {
+  delete props.staticContext
   const view = boardView(levels, level)
   return (
     <Context.Provider value={{ level }}>
