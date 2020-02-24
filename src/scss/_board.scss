@@ -19,6 +19,14 @@
         z-index: 42;
       }
     }
+
+    &.admin-board__small,
+    &.admin-board__hidden {
+      .admin-board__small-body__hidden {
+        max-height: 0;
+        opacity: 0;
+      }
+    }
   }
 
   .admin-board__content {
@@ -208,6 +216,14 @@
       &:after {
         opacity: 1;
       }
+    }
+
+    .admin-board__small-body__hidden {
+      max-height: 100%;
+
+      overflow: hidden;
+
+      transition: 0.5s ease;
     }
   }
 

@@ -68,11 +68,11 @@ const App = () => (
 
 ### DashboardLink
 
-prop | required | type | info
---- | --- | --- | ---
-`to` | yes<sup>1</sup> | String | path to which you would like to link<br>max 2 levels<sup>2</sup>
-`view` | yes<sup>1</sup> | String | use only when linking to a view (sub level) from it’s root level<br>only accepts string without `/`
-`...props` | no | Object | Add additional props like className, title, …
+| prop       | required        | type   | info                                                                                                |
+| ---------- | --------------- | ------ | --------------------------------------------------------------------------------------------------- |
+| `to`       | yes<sup>1</sup> | String | path to which you would like to link<br>max 2 levels<sup>2</sup>                                    |
+| `view`     | yes<sup>1</sup> | String | use only when linking to a view (sub level) from it’s root level<br>only accepts string without `/` |
+| `...props` | no              | Object | Add additional props like className, title, …                                                       |
 
 1. `to` or `view` are required, neither both nor none
 2. prop should match `/^(\/?[^\/]+){1,${levels}}$/`
@@ -111,17 +111,17 @@ const User = ({ _id, name }) => (
 
 ### BoardHead & BoardBody
 
-Head | required | type | info
---- | --- | --- | ---
-`title` | | String<br>Component | Title to show on top of the board
-`content` | | String<br>Component | Text to display below the title
-`actions` | | Array | Buttons/links/… which are shown on the right. To ensure a nice layout, use icons as content. Use the `[title]` attribute to populate a tooltip below the action.<br>(Note: apply `key` props to each element to prevent React warnings)
-`children` | | String<br>Component | Text to display below title and content<br>_similar to `content`_
+| Head       | required | type                | info                                                                                                                                                                                                                                    |
+| ---------- | -------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`    |          | String<br>Component | Title to show on top of the board                                                                                                                                                                                                       |
+| `content`  |          | String<br>Component | Text to display below the title                                                                                                                                                                                                         |
+| `actions`  |          | Array               | Buttons/links/… which are shown on the right. To ensure a nice layout, use icons as content. Use the `[title]` attribute to populate a tooltip below the action.<br>(Note: apply `key` props to each element to prevent React warnings) |
+| `children` |          | String<br>Component | Text to display below title and content<br>_similar to `content`_                                                                                                                                                                       |
 
-Body | required | type | info
---- | --- | --- | ---
-`loading` | | Boolean | Shows a spinner while your body content is loading.<br>This prop does not prevent rendering!
-`children` | | String<br>Component | Content to display inside the Board.
+| Body       | required | type                | info                                                                                         |
+| ---------- | -------- | ------------------- | -------------------------------------------------------------------------------------------- |
+| `loading`  |          | Boolean             | Shows a spinner while your body content is loading.<br>This prop does not prevent rendering! |
+| `children` |          | String<br>Component | Content to display inside the Board.                                                         |
 
 ```JSX
 import { DashboardLink, BoardHead, BoardBody } from '@lefapps/admin-dashboard'
@@ -153,6 +153,19 @@ const Users = ({loading, users}) => {
     </BoardBody>
   </>
 )}
+```
+
+You can add the class `admin-board__small-body__hidden` to hide certain components in the `BoardBody` when displayed in the smaller sidebar. **Please use sparingly. When this is needed, you are probably not using the dashboard as intended.**
+
+```JSX
+<BoardBody>
+  <ul>
+    {listItems}
+  </ul>
+  <form className={'admin-board__small-body__hidden'}>
+    {formElements}
+  </form>
+</BoardBody>
 ```
 
 ### AdminTools
@@ -213,7 +226,7 @@ Level is also stored in the state of the AdminDashboard component.
 
 ## Todo
 
-* Labels can accept: string, function or component
+- Labels can accept: string, function or component
 
 ## Notes
 
