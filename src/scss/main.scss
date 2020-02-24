@@ -43,6 +43,7 @@ $admin-colors: (
   secondary: LIGHTSLATEGRAY,
   light: WHITESMOKE,
   text: DIMGRAY,
+  dark: DIMGRAY,
   info: CORNFLOWERBLUE,
   success: SEAGREEN,
   warning: GOLD,
@@ -56,6 +57,7 @@ $admin-colors__dark: (
   secondary: ROSYBROWN !important,
   light: #333 !important,
   text: WHITESMOKE !important,
+  dark: WHITESMOKE !important,
   snow: #222 !important
 );
 
