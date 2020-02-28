@@ -1,0 +1,70 @@
+.admin-board__list {
+  &-item {
+    td {
+      vertical-align: middle !important;
+      font-size: 1rem;
+    }
+    &__label {
+      color: var(--primary);
+      font-weight: bold;
+    }
+    &__actions {
+      text-align: right;
+      white-space: nowrap;
+
+      .has-error {
+        position: relative;
+        &:after {
+          content: '';
+
+          position: absolute;
+          top: 0.25em;
+          right: 0.25em;
+
+          width: 0.5em;
+          height: 0.5em;
+
+          border-radius: 0.25em;
+          background-color: var(--danger);
+        }
+
+        &:hover {
+          .admin-board__list-item__error {
+            display: block;
+          }
+        }
+      }
+    }
+    &__error {
+      position: absolute;
+      bottom: 100%;
+      left: -3em;
+      right: -3em;
+
+      margin-bottom: 0.5em;
+      padding: 0.25em;
+
+      display: none;
+
+      color: white;
+      background-color: var(--danger);
+
+      text-align: center;
+      font-size: 0.75rem;
+      white-space: normal;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+
+        margin-left: -0.5em;
+
+        border: 0.5em solid transparent;
+        border-top-color: var(--danger);
+        border-top-width: 0.25em;
+      }
+    }
+  }
+}
