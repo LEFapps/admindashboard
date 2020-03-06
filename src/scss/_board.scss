@@ -165,6 +165,7 @@
 
           transform: translateX(-50%);
           transition: opacity 0.2s;
+          pointer-events: none;
         }
 
         &:hover,
