@@ -48,19 +48,23 @@ const boardSwitcher = (settings, base = '') => {
     })
     return pathArray
   }
-  return listPaths(settings, cleanBase(base)).reduce((pathArray, path) => {
-    const abs = path.absolutePath
-      .split('/')
-      .slice(1)
-      .filter(p => p !== base.replace('/', ''))
-    const scope = abs.filter((x, y) => !(y % 2)).join('/') || '/'
-    const i = abs.length - 1
-    if (pathArray[i]) {
-      if (pathArray[i][scope]) pathArray[i][scope].push(path)
-      else pathArray[i][scope] = [path]
-    } else pathArray.push({ [`${scope}`]: [path] })
-    return pathArray
-  }, [])
+  return new Promise(resolve =>
+    resolve(
+      listPaths(settings, cleanBase(base)).reduce((pathArray, path) => {
+        const abs = path.absolutePath
+          .split('/')
+          .slice(1)
+          .filter(p => p !== base.replace('/', ''))
+        const scope = abs.filter((x, y) => !(y % 2)).join('/') || '/'
+        const i = abs.length - 1
+        if (pathArray[i]) {
+          if (pathArray[i][scope]) pathArray[i][scope].push(path)
+          else pathArray[i][scope] = [path]
+        } else pathArray.push({ [`${scope}`]: [path] })
+        return pathArray
+      }, [])
+    )
+  )
 }
 
 class AdminDashboard extends Component {
@@ -69,11 +73,17 @@ class AdminDashboard extends Component {
     this.state = {
       level: this.getLevel(),
       aboveTablet: above(768),
-      boardSwitches: boardSwitcher(this.props.settings, this.props.match.url)
+      boardSwitches: []
     }
   }
   componentDidMount () {
     window.addEventListener('resize', this.trackResize)
+    // defer
+    setTimeout(() => {
+      boardSwitcher(this.props.settings, this.props.match.url).then(
+        boardSwitches => this.setState({ boardSwitches })
+      )
+    }, 0)
   }
   componentWillUnmount () {
     window.removeEventListener('resize', this.trackResize)
@@ -148,17 +158,17 @@ class AdminDashboard extends Component {
             {`#admin-dashboard,
             #admin-dashboard__tools {
               --primary: ${
-      this.props.branding && this.props.branding.color
-        ? this.props.branding.color
-        : defaultBranding.color
-      } ;
+                this.props.branding && this.props.branding.color
+                  ? this.props.branding.color
+                  : defaultBranding.color
+              } ;
               --primaryDark: ${
-      this.props.branding && this.props.branding.colorDark
-        ? this.props.branding.colorDark
-        : this.props.branding && this.props.branding.color
-          ? this.props.branding.color
-          : defaultBranding.color
-      } ;
+                this.props.branding && this.props.branding.colorDark
+                  ? this.props.branding.colorDark
+                  : this.props.branding && this.props.branding.color
+                  ? this.props.branding.color
+                  : defaultBranding.color
+              } ;
             }`}
           </style>
           <div
@@ -175,11 +185,13 @@ class AdminDashboard extends Component {
             <Board levels={level} level={0}>
               <>
                 <BoardHead title={this.props.label} />
-                <BoardBody>
-                  <MainMenu
-                    getLink={this.getLink}
-                    settings={this.props.settings}
-                  />
+                <BoardBody loading={!boardSwitches.length}>
+                  {boardSwitches.length ? (
+                    <MainMenu
+                      getLink={this.getLink}
+                      settings={this.props.settings}
+                    />
+                  ) : null}
                 </BoardBody>
               </>
             </Board>
