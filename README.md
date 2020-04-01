@@ -168,6 +168,74 @@ You can add the class `admin-board__small-body__hidden` to hide certain componen
 </BoardBody>
 ```
 
+### BoardList
+
+Use this component to display a minimally styled list (table) in `BoardBody`s.
+
+```JSX
+import { BoardBody, BoardList, BoardListItem } from '@lefapps/admin-dashboard'
+
+const Board = ({users}) => {
+  const actions = _id => [
+    {
+      type: 'edit',
+      view: _id
+    }, {
+      type: 'remove',
+      onClick: () => removeUser(_id)
+    }
+  ]
+  return <BoardBody>
+      <BoardList>
+        {users.map(({ _id, name, initials, email }, index) =>
+          <BoardListItem
+            key={index}
+            label={initials}
+            actions={actions(_id)}
+          >
+            <strong>{name}</strong>
+            <br />
+            <small>{email}</small>
+          </BoardListItem>
+        )}
+      </BoardList>
+    </BoardBody>
+}
+```
+
+| prop     | required | type     | info                                                        |
+| -------- | -------- | -------- | ----------------------------------------------------------- |
+| label    |          | Node     | label for the list item, can be a string, number or element |
+| actions  |          | [Object] | list of possible actions on item (see [below](#actions))    |
+| children | kind of  | Nodes    | Description of list item (e.g.: name or title)              |
+
+#### Actions
+
+| prop    | required | type   | info                                              |
+| ------- | -------- | ------ | ------------------------------------------------- |
+| to      |          | String | regular link                                      |
+| view    |          | String | DashboardLink 'view'                              |
+| onClick |          | Func   | inline action method                              |
+| type    |          | String | predefined action type                            |
+| color   |          | String | bootstrap color name                              |
+| icon    |          | String | FontAwesome Icon                                  |
+| loading |          | Bool   | set to true while awaiting inline action response |
+| error   |          | String | display message when inline action failed         |
+
+#### Predefined Action props
+
+| Type      | Color   | Icon       |
+| --------- | ------- | ---------- |
+| remove    | danger  | trash-alt  |
+| edit      | dark    | edit       |
+| view      | info    | eye        |
+| link      | warning | link       |
+| unlink    | warning | unlink     |
+| drag      | light   | sort       |
+| up        | light   | caret-up   |
+| down      | light   | caret-down |
+| duplicate | warning | copy       |
+
 ### AdminTools
 
 Use this component to wrap components to show up on the right-hand side of the breadcrumbs, e.g.: language selection or sign-out button. Correct styling will be provided. Raise an issue or pull request for specific styling issues.

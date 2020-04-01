@@ -4,8 +4,11 @@ import isFunction from 'lodash/isFunction'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DashboardLink from './DashboardLink'
 
-export const BoardList = ({ children }) => (
-  <table className={'table admin-board__list'}>
+export const BoardList = ({ children, ...props }) => (
+  <table
+    {...props}
+    className={'table admin-board__list ' + (props.className || '')}
+  >
     <tbody>{children}</tbody>
   </table>
 )
@@ -52,6 +55,7 @@ const Action = ({
   loading = false,
   error = '',
   to,
+  view,
   onClick,
   icon,
   ...props
@@ -61,10 +65,10 @@ const Action = ({
   const className = `btn btn-sm btn-outline-${actionColor}${error &&
     ' has-error'}${
     ['view', 'edit'].includes(type) ? '' : ' admin-board__small-body__hidden'
-  }`
+  }${props.className ? ' ' + props.className : ''}`
   if (onClick && isFunction(onClick)) {
     return (
-      <button className={className} onClick={onClick}>
+      <button {...props} className={className} onClick={onClick}>
         {loading ? (
           <Spinner color={actionColor} />
         ) : (
@@ -74,9 +78,21 @@ const Action = ({
       </button>
     )
   }
+  if (view && isString(view)) {
+    return (
+      <DashboardLink {...props} view={view} className={className}>
+        {loading ? (
+          <Spinner color={actionColor} />
+        ) : (
+          <FontAwesomeIcon icon={actionIcon} />
+        )}
+        {(error && <Err msg={error} />) || null}
+      </DashboardLink>
+    )
+  }
   if (to && isString(to)) {
     return (
-      <DashboardLink to={to} className={className}>
+      <DashboardLink {...props} to={to} className={className}>
         {loading ? (
           <Spinner color={actionColor} />
         ) : (
@@ -101,7 +117,7 @@ const Action = ({
 export const BoardListItem = ({ children, label, actions, ...props }) => {
   return (
     <tr className={'admin-board__list-item'}>
-      <td className={'admin-board__list-item__label'}>{label}</td>
+      <td className={'admin-board__list-item__label'}>{label || ''}</td>
       <td className={'admin-board__list-item__content'}>{children}</td>
       <td className={'admin-board__list-item__actions'}>
         {Object.keys(actions).map((action, key) => (
