@@ -13,13 +13,13 @@
       font-weight: bold;
     }
 
-    input[type='text'],
-    input[type='number'],
-    input[type='tel'],
-    input[type='email'],
-    input[type='password'],
-    input[type='search'],
-    input[type='file'],
+    input[type="text"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"],
+    input[type="file"],
     select,
     textarea,
     output,
@@ -129,7 +129,7 @@
       box-shadow: none;
 
       font-weight: bold;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
 
       &:not(:disabled) {
         cursor: pointer;
@@ -174,8 +174,6 @@
     }
 
     .md-editor__body {
-      height: 70vh;
-
       display: flex;
       overflow: hidden;
 
@@ -211,7 +209,7 @@
     .row {
       padding: 1em;
 
-      > [class*='col-'] {
+      > [class*="col-"] {
         flex: 0 0 100%;
         max-width: 100%;
       }

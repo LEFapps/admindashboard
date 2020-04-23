@@ -22,7 +22,7 @@ const Template = ({ style, options: { type }, message, close }) => (
 
 const options = {
   template: Template,
-  position: positions.BOTTOM_LEFT,
+  position: positions.TOP_CENTER,
   timeout: 8000,
   offset: '2em',
   transition: transitions.FADE

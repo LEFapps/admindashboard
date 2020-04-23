@@ -32,44 +32,14 @@ const above = size => window.matchMedia(`(min-width: ${size}px)`).matches
 const BoardBody = withContext(Body)
 const BoardHead = withContext(Head)
 
-const boardSwitcher = (settings, base = '') => {
-  const listPaths = (paths, url = '', pathArray = []) => {
-    paths.forEach(({ views, ...path }, i, arr) => {
-      const absolutePath = url + path.path
-      pathArray.push({ absolutePath, ...path })
-      const otherPaths = arr.filter(a => absolutePath.indexOf(a.path) < 0)
-      if (views) {
-        views.forEach(view => {
-          const subPath = absolutePath + view.path
-          pathArray.push({ absolutePath: subPath, ...view })
-          listPaths(otherPaths, subPath, pathArray)
-        })
-      }
-    })
-    return pathArray
-  }
-  return listPaths(settings, cleanBase(base)).reduce((pathArray, path) => {
-    const abs = path.absolutePath
-      .split('/')
-      .slice(1)
-      .filter(p => p !== base.replace('/', ''))
-    const scope = abs.filter((x, y) => !(y % 2)).join('/') || '/'
-    const i = abs.length - 1
-    if (pathArray[i]) {
-      if (pathArray[i][scope]) pathArray[i][scope].push(path)
-      else pathArray[i][scope] = [path]
-    } else pathArray.push({ [`${scope}`]: [path] })
-    return pathArray
-  }, [])
-}
-
 class AdminDashboard extends Component {
   constructor (props) {
     super(props)
     this.state = {
       level: this.getLevel(),
-      aboveTablet: above(768),
-      boardSwitches: boardSwitcher(this.props.settings, this.props.match.url)
+      url: this.getUrl(),
+      scope: this.getScope(),
+      aboveTablet: above(768)
     }
   }
   componentDidMount () {
@@ -80,7 +50,11 @@ class AdminDashboard extends Component {
   }
   componentDidUpdate (prevProps) {
     if (prevProps.location.pathname !== this.props.location.pathname) {
-      this.setState({ level: this.getLevel() })
+      this.setState({
+        url: this.getUrl(),
+        scope: this.getScope(),
+        level: this.getLevel()
+      })
     }
   }
   trackResize = () => {
@@ -103,12 +77,8 @@ class AdminDashboard extends Component {
     this.getUrl()
       .split('/')
       .slice(1)
-      .map((v, i, a) =>
-        a
-          .filter((x, y) => !(y % 2))
-          .slice(0, Math.floor(i / 2) + 1)
-          .join('/')
-      )
+      .filter(e => !!e)
+      .map((e, i, a) => (i % 2 ? a[i - 1] : e))
   getLink = (path, level, isView) => {
     const base = this.props.match.url
     const url = this.getUrl()
@@ -130,8 +100,8 @@ class AdminDashboard extends Component {
     return cleanUrl(base + urlParts.slice(0, level + 2).join('/'))
   }
   render () {
-    const scope = this.getScope()
-    const { boardSwitches, aboveTablet, level } = this.state
+    const { scope, aboveTablet, level } = this.state
+    const { settings, match } = this.props
     return (
       <AlertProvider {...alertOptions}>
         <Context.Provider
@@ -167,7 +137,6 @@ class AdminDashboard extends Component {
           >
             <BreadCrumbs
               getLink={this.getLink}
-              boardSwitches={boardSwitches}
               level={level}
               scope={scope}
               {...this.props}
@@ -183,19 +152,38 @@ class AdminDashboard extends Component {
                 </BoardBody>
               </>
             </Board>
-            {boardSwitches.slice(0, level).map((pathObjects, i) => (
-              <Switch key={`board-switch-${i}`}>
-                {(pathObjects[scope[i]] || []).map(
-                  ({ absolutePath, component: Component, ...props }, j) => (
-                    <Route path={absolutePath} key={`route-${i}-${j}`}>
-                      <Board levels={level} level={i + 1} {...props}>
-                        <Component />
-                      </Board>
-                    </Route>
-                  )
-                )}
-              </Switch>
-            ))}
+            {scope.map((scopeElement, i) => {
+              const { component, views } = settings.find(
+                ({ path }) => path === `/${scopeElement}`
+              )
+              const Component = component
+              return !(i % 2) ? (
+                <Board levels={level} level={i + 1} key={`board-${i + 1}`}>
+                  <Component />
+                </Board>
+              ) : (
+                <Switch key={`board-switch-${i + 1}`}>
+                  {views.map(({ path: viewPath, component: ViewComponent }) => {
+                    const routePath =
+                      match.url +
+                      '/' +
+                      scope
+                        .map((e, j) => (i === j ? viewPath.substring(1) : e))
+                        .join('/')
+                    return (
+                      <Route
+                        path={routePath}
+                        key={`board-${i + 1}-${viewPath}`}
+                      >
+                        <Board levels={level} level={i + 1}>
+                          <ViewComponent />
+                        </Board>
+                      </Route>
+                    )
+                  })}
+                </Switch>
+              )
+            })}
             {!level && this.props.children && aboveTablet ? (
               <Board levels={1} level={1}>
                 {this.props.children}

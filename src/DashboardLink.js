@@ -5,7 +5,16 @@ import { pathPropType } from './helpers'
 import { withContext } from './AdminDashboard'
 import { withBoard } from './Board'
 
-const DashboardLink = ({ to, view, getLink, level, children, ...props }) => {
+const DashboardLink = ({
+  to,
+  view,
+  getLink,
+  level,
+  minimized,
+  setMinimized,
+  children,
+  ...props
+}) => {
   return (
     <NavLink to={getLink(to || view, level, !!view)} {...props}>
       {children}

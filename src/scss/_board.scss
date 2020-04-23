@@ -48,7 +48,7 @@
 
     background-color: var(--primary);
 
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     transition: $admin-timing ease-in 0s;
 
@@ -113,13 +113,13 @@
       margin-top: -1em;
       margin-bottom: -2.5em;
 
-      text-align: right;
+      text-align: left;
 
       .btn {
         position: relative;
 
         width: 2.5em;
-        margin-left: 0.5em;
+        margin-right: 0.5em;
         margin-bottom: 0.5em;
         padding: 0;
 
@@ -170,6 +170,16 @@
     }
   }
 
+  .admin-board__minimized {
+    .admin-board__head {
+      padding: 22%;
+      &:before {
+        bottom: -10%;
+        padding: 35%;
+      }
+    }
+  }
+
   .admin-board__body {
     position: relative;
 
@@ -180,7 +190,7 @@
     background-size: auto 4em;
 
     &:after {
-      content: '';
+      content: "";
 
       position: absolute;
       top: 40vh;
@@ -215,7 +225,7 @@
     .admin-board__head {
       &:before {
         @include above($tablet) {
-          content: '';
+          content: "";
         }
       }
     }
@@ -237,7 +247,7 @@
         background-color: var(--snow);
 
         &:after {
-          content: '';
+          content: "";
 
           position: absolute;
           top: 100%;

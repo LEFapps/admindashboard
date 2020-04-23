@@ -1,5 +1,5 @@
 @charset 'utf-8';
-@import './mixins';
+@import "./mixins";
 
 $fourk: 240em; /* 3840px */
 $threek: 180em; /* 2880px */
@@ -37,7 +37,7 @@ $grid-breakpoints: (
 );
 
 $admin-shadow: 0.1875rem 0.375rem 1rem rgba(black, 0.16);
-$admin-timing: 0.5s;
+$admin-timing: 0.4s;
 $admin-colors: (
   primary: var(--primary),
   secondary: LIGHTSLATEGRAY,
@@ -76,7 +76,7 @@ $admin-colors__dark: (
 
   color: var(--text);
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 1rem;
 
   &.dark-mode {
@@ -105,15 +105,15 @@ $admin-colors__dark: (
   background-color: var(--snow);
 }
 
-@import './layout';
-@import './breadcrumb';
-@import './tools';
-@import './board';
-@import './menu';
+@import "./layout";
+@import "./breadcrumb";
+@import "./tools";
+@import "./board";
+@import "./menu";
 
-@import './reset/table';
-@import './reset/text';
-@import './reset/form';
-@import './reset/card';
-@import './reset/modal';
-@import './reset/alert';
+@import "./reset/table";
+@import "./reset/text";
+@import "./reset/form";
+@import "./reset/card";
+@import "./reset/modal";
+@import "./reset/alert";

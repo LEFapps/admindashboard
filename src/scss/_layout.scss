@@ -27,6 +27,11 @@
       transition-delay: 0s;
     }
 
+    &.admin-board__minimized {
+      flex-basis: 5% !important;
+      max-width: 5% !important;
+    }
+
     @include below($tablet) {
       &:not(.admin-board__full) {
         margin-left: -100%;
@@ -37,14 +42,16 @@
       }
     }
 
+    @include above($tablet) {
+      &.admin-board__full {
+        flex-grow: 1;
+        max-width: none;
+      }
+    }
+
     @include between($tablet, $laptop) {
       flex: 0 0 37.5%;
       max-width: 37.5%;
-
-      &.admin-board__full {
-        flex-basis: 62.5%;
-        max-width: 62.5%;
-      }
 
       &.admin-board__hidden {
         margin-left: -37.5%;
@@ -59,11 +66,6 @@
     @include above($laptop) {
       flex: 0 0 24em;
       max-width: 24em;
-
-      &.admin-board__full {
-        flex-grow: 1;
-        max-width: none;
-      }
 
       &.admin-board__hidden {
         margin-left: -24em;
