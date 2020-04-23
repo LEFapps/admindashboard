@@ -10,7 +10,7 @@ const Board = ({ levels, level, children, ...props }) => {
   delete props.staticContext
   const view = boardView(levels, level)
   return (
-    <Context.Provider value={{ level }}>
+    <Context.Provider value={{ level, levels }}>
       <article className={`admin-board${view ? ' admin-board__' + view : ''}`}>
         <div className={'admin-board__content'}>
           {children ? React.cloneElement(children, props) : null}
