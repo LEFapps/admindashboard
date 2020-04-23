@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import isFunction from 'lodash/isFunction'
 
 const Breadcrumb = ({ children, id, className }) => (
   <nav aria-label='breadcrumb' id={id} className={className}>
@@ -35,7 +36,7 @@ const Level = ({ items = [], level, url, ...props }) => (
                 to={props.getLink(null, level)}
                 key={`breadcrumb-${level}`}
               >
-                {label}
+                {isFunction(label) ? label(params) : label}
               </BreadcrumbItem>
               <Level
                 {...props}
@@ -52,7 +53,7 @@ const Level = ({ items = [], level, url, ...props }) => (
 )
 
 const BreadCrumbs = props => {
-  const { label: mainLabel, getLink, level, scope, settings, match } = props
+  const { label: mainLabel, getLink, level, settings, match } = props
   return (
     <Breadcrumb id={'admin-dashboard-nav'}>
       <Link
@@ -71,41 +72,6 @@ const BreadCrumbs = props => {
         items={settings}
         url={match.url}
       />
-      {/* {scope.map((scopeElement, i) => {
-        const { label, views } = settings.find(
-          ({ path }) => path === `/${scopeElement}`
-        )
-        return !(i % 2) ? (
-          <BreadcrumbItem
-            active={i + 1 === level}
-            to={getLink(null, i)}
-            key={`breadcrumb-${i}`}
-          >
-            {label}
-          </BreadcrumbItem>
-        ) : (
-          <Switch key={`breadcrumb-switch-${i + 1}`}>
-            {views.map(({ path: viewPath, label: viewLabel }) => {
-              const routePath =
-                match.url +
-                '/' +
-                scope
-                  .map((e, j) => (i === j ? viewPath.substring(1) : e))
-                  .join('/')
-              return (
-                <Route path={routePath} key={`board-${i + 1}-${viewPath}`}>
-                  <BreadcrumbItem
-                    active={i + 1 === level}
-                    to={getLink(null, i)}
-                  >
-                    {viewLabel}
-                  </BreadcrumbItem>
-                </Route>
-              )
-            })}
-          </Switch>
-        )
-      })} */}
     </Breadcrumb>
   )
 }
