@@ -22,9 +22,10 @@ const BreadcrumbItem = ({ active, children, id, className, to }) => (
 const BreadCrumbs = ({
   label: mainLabel,
   getLink,
-  boardSwitches,
   level,
-  scope
+  scope,
+  settings,
+  match
 }) => {
   return (
     <Breadcrumb id={'admin-dashboard-nav'}>
@@ -38,17 +39,41 @@ const BreadCrumbs = ({
       <BreadcrumbItem active={!level} to={getLink('')}>
         {mainLabel}
       </BreadcrumbItem>
-      {boardSwitches.map((pathObjects, i) => (
-        <Switch key={`breadcrumb-switch-${i}`}>
-          {(pathObjects[scope[i]] || []).map(({ absolutePath, label }, j) => (
-            <Route path={absolutePath} key={`breadcrumb-route-${i}-${j}`}>
-              <BreadcrumbItem active={i + 1 === level} to={getLink(null, i)}>
-                {label}
-              </BreadcrumbItem>
-            </Route>
-          ))}
-        </Switch>
-      ))}
+      {scope.map((scopeElement, i) => {
+        const { label, views } = settings.find(
+          ({ path }) => path === `/${scopeElement}`
+        )
+        return !(i % 2) ? (
+          <BreadcrumbItem
+            active={i + 1 === level}
+            to={getLink(null, i)}
+            key={`breadcrumb-${i}`}
+          >
+            {label}
+          </BreadcrumbItem>
+        ) : (
+          <Switch key={`breadcrumb-switch-${i + 1}`}>
+            {views.map(({ path: viewPath, label: viewLabel }) => {
+              const routePath =
+                match.url +
+                '/' +
+                scope
+                  .map((e, j) => (i === j ? viewPath.substring(1) : e))
+                  .join('/')
+              return (
+                <Route path={routePath} key={`board-${i + 1}-${viewPath}`}>
+                  <BreadcrumbItem
+                    active={i + 1 === level}
+                    to={getLink(null, i)}
+                  >
+                    {viewLabel}
+                  </BreadcrumbItem>
+                </Route>
+              )
+            })}
+          </Switch>
+        )
+      })}
     </Breadcrumb>
   )
 }
