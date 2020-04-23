@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Breadcrumb = ({ children, id, className }) => (
@@ -19,14 +19,40 @@ const BreadcrumbItem = ({ active, children, id, className, to }) => (
   </li>
 )
 
-const BreadCrumbs = ({
-  label: mainLabel,
-  getLink,
-  level,
-  scope,
-  settings,
-  match
-}) => {
+const Level = ({ items = [], level, url, ...props }) => (
+  <Switch>
+    {items.map(({ path, label, views = [] }) => {
+      const nextPath = url + path
+      const nextItems = (views && views.length && views) || props.defaultItems
+      return (
+        <Route
+          key={nextPath}
+          path={nextPath}
+          render={withRouter(({ match: { params } }) => (
+            <Fragment>
+              <BreadcrumbItem
+                active={level === props.levels}
+                to={props.getLink(null, level)}
+                key={`breadcrumb-${level}`}
+              >
+                {label}
+              </BreadcrumbItem>
+              <Level
+                {...props}
+                url={nextPath}
+                items={nextItems}
+                level={level + 1}
+              />
+            </Fragment>
+          ))}
+        />
+      )
+    })}
+  </Switch>
+)
+
+const BreadCrumbs = props => {
+  const { label: mainLabel, getLink, level, scope, settings, match } = props
   return (
     <Breadcrumb id={'admin-dashboard-nav'}>
       <Link
@@ -36,10 +62,16 @@ const BreadCrumbs = ({
       >
         <FontAwesomeIcon icon='arrow-left' />
       </Link>
-      <BreadcrumbItem active={!level} to={getLink('')}>
+      <BreadcrumbItem active={level === 0} to={getLink('')}>
         {mainLabel}
       </BreadcrumbItem>
-      {scope.map((scopeElement, i) => {
+      <Level
+        {...props}
+        defaultItems={settings}
+        items={settings}
+        url={match.url}
+      />
+      {/* {scope.map((scopeElement, i) => {
         const { label, views } = settings.find(
           ({ path }) => path === `/${scopeElement}`
         )
@@ -73,7 +105,7 @@ const BreadCrumbs = ({
             })}
           </Switch>
         )
-      })}
+      })} */}
     </Breadcrumb>
   )
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter, Switch, Route } from 'react-router-dom'
 import { Provider as AlertProvider } from 'react-alert'
@@ -33,6 +33,35 @@ const above = size => window.matchMedia(`(min-width: ${size}px)`).matches
 const BoardBody = withContext(Body)
 const BoardHead = withContext(Head)
 
+const Level = ({ items = [], level, url, ...props }) => (
+  <Switch>
+    {items.map(({ path, component: Component, views = [] }) => {
+      const nextPath = url + path
+      const nextItems = (views && views.length && views) || props.defaultItems
+      if (!Component) return null
+      return (
+        <Route
+          key={nextPath}
+          path={nextPath}
+          render={() => (
+            <Fragment>
+              <Board levels={props.levels} level={level}>
+                <Component />
+              </Board>
+              <Level
+                {...props}
+                url={nextPath}
+                items={nextItems}
+                level={level + 1}
+              />
+            </Fragment>
+          )}
+        />
+      )
+    })}
+  </Switch>
+)
+
 class AdminDashboard extends Component {
   constructor (props) {
     super(props)
@@ -46,12 +75,6 @@ class AdminDashboard extends Component {
   }
   componentDidMount () {
     window.addEventListener('resize', this.trackResize)
-    // defer
-    setTimeout(() => {
-      boardSwitcher(this.props.settings, this.props.match.url).then(
-        boardSwitches => this.setState({ boardSwitches })
-      )
-    }, 0)
   }
   componentWillUnmount () {
     window.removeEventListener('resize', this.trackResize)
@@ -148,7 +171,8 @@ class AdminDashboard extends Component {
           >
             <BreadCrumbs
               getLink={this.getLink}
-              level={level}
+              level={1}
+              levels={scope.length}
               scope={scope}
               {...this.props}
             />
@@ -164,48 +188,21 @@ class AdminDashboard extends Component {
             <Board levels={level} level={0}>
               <>
                 <BoardHead title={this.props.label} />
-                <BoardBody loading={!boardSwitches.length}>
-                  {boardSwitches.length ? (
-                    <MainMenu
-                      getLink={this.getLink}
-                      settings={this.props.settings}
-                    />
-                  ) : null}
+                <BoardBody>
+                  <MainMenu
+                    getLink={this.getLink}
+                    settings={this.props.settings}
+                  />
                 </BoardBody>
               </>
             </Board>
-            {scope.map((scopeElement, i) => {
-              const { component, views } = settings.find(
-                ({ path }) => path === `/${scopeElement}`
-              )
-              const Component = component
-              return !(i % 2) ? (
-                <Board levels={level} level={i + 1} key={`board-${i + 1}`}>
-                  <Component />
-                </Board>
-              ) : (
-                <Switch key={`board-switch-${i + 1}`}>
-                  {views.map(({ path: viewPath, component: ViewComponent }) => {
-                    const routePath =
-                      match.url +
-                      '/' +
-                      scope
-                        .map((e, j) => (i === j ? viewPath.substring(1) : e))
-                        .join('/')
-                    return (
-                      <Route
-                        path={routePath}
-                        key={`board-${i + 1}-${viewPath}`}
-                      >
-                        <Board levels={level} level={i + 1}>
-                          <ViewComponent />
-                        </Board>
-                      </Route>
-                    )
-                  })}
-                </Switch>
-              )
-            })}
+            <Level
+              defaultItems={settings}
+              items={settings}
+              levels={scope.length}
+              level={1}
+              url={this.props.match.url}
+            />
             {!level && this.props.children && aboveTablet ? (
               <Board levels={1} level={1}>
                 {this.props.children}
