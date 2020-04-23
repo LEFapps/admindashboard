@@ -33,7 +33,7 @@ const Level = ({ items = [], level, url, ...props }) => (
             <Fragment>
               <BreadcrumbItem
                 active={level === props.levels}
-                to={props.getLink(null, level)}
+                to={props.getLink(null, level - 1)}
                 key={`breadcrumb-${level}`}
               >
                 {isFunction(label) ? label(params) : label}
@@ -52,22 +52,24 @@ const Level = ({ items = [], level, url, ...props }) => (
   </Switch>
 )
 
-const BreadCrumbs = props => {
-  const { label: mainLabel, getLink, level, settings, match } = props
+const BreadCrumbs = ({ children, ...props }) => {
+  const { label: mainLabel, getLink, levels, settings, match } = props
   return (
     <Breadcrumb id={'admin-dashboard-nav'}>
+      {children}
       <Link
         className={'breadcrumb-back'}
-        disabled={!level}
-        to={getLink(false, level - 2)}
+        disabled={levels === 0}
+        to={getLink(false, levels - 2)}
       >
         <FontAwesomeIcon icon='arrow-left' />
       </Link>
-      <BreadcrumbItem active={level === 0} to={getLink('')}>
+      <BreadcrumbItem active={levels === 0} to={getLink('')}>
         {mainLabel}
       </BreadcrumbItem>
       <Level
         {...props}
+        level={1}
         defaultItems={settings}
         items={settings}
         url={match.url}

@@ -17,10 +17,10 @@
     max-width: 100%;
     max-height: 100%;
 
-    transition-property: margin-left, max-width, flex;
+    transition-property: margin-left, max-width, flex, padding;
     transition-duration: $admin-timing;
     transition-timing-function: ease-out;
-    transition-delay: $admin-timing, 0s, 0s;
+    transition-delay: $admin-timing, 0s, 0s, $admin-timing;
     transform: translate3d(0, 0, 0);
 
     &:first-of-type {
@@ -100,33 +100,11 @@
           margin-left: -24em;
         }
       }
-    }
-  }
-
-  #admin-dashboard__maximised-toggle {
-    position: absolute;
-    top: 3em;
-    right: 0.75em;
-    z-index: 625;
-
-    width: 2em;
-    height: 2em;
-    padding: 0;
-
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-
-    border-radius: 50%;
-    // box-shadow: $admin-shadow;
-
-    @include above($desktop) {
-      top: 6em;
-      right: 4em;
-    }
-
-    @include below($tablet) {
-      display: none;
+      @include above($desktop) {
+        &.admin-board__full {
+          padding-left: 2em;
+        }
+      }
     }
   }
 }

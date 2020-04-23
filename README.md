@@ -310,3 +310,10 @@ danger: 'exclamation-circle'
 warning: 'question-circle'
 success: 'check-circle'
 ```
+
+If you use the `allowFullscreen` prop, make sure to add the following icons too:
+
+```YAML
+faSignInAlt: 'sign-in-alt'
+faSignOutAlt: 'sign-out-alt'
+```

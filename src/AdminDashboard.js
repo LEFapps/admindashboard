@@ -132,7 +132,7 @@ class AdminDashboard extends Component {
   }
   render () {
     const { scope, aboveTablet, level, maximised } = this.state
-    const { settings, match } = this.props
+    const { settings, darkMode } = this.props
     return (
       <AlertProvider {...alertOptions}>
         <Context.Provider
@@ -165,26 +165,31 @@ class AdminDashboard extends Component {
           <div
             id='admin-dashboard'
             className={
-              (this.props.darkMode ? 'dark-mode' : '') +
-              (maximised && ' admin-dashboard__maximised')
+              (darkMode ? 'dark-mode' : '') +
+              (maximised && scope.length > 0
+                ? ' admin-dashboard__maximised'
+                : '')
             }
           >
             <BreadCrumbs
               getLink={this.getLink}
-              level={1}
               levels={scope.length}
               scope={scope}
               {...this.props}
-            />
-            {this.props.allowFullscreen && (
-              <button
-                id={'admin-dashboard__maximised-toggle'}
-                className={'btn btn-primary' + (maximised && ' active')}
-                onClick={() => this.setState({ maximised: !maximised })}
-              >
-                <FontAwesomeIcon icon={maximised ? 'compress' : 'expand'} />
-              </button>
-            )}
+            >
+              {this.props.allowFullscreen && (
+                <button
+                  id={'admin-dashboard__maximised-toggle'}
+                  className={'btn btn-primary' + (maximised ? ' active' : '')}
+                  onClick={() => this.setState({ maximised: !maximised })}
+                  disabled={scope.length === 0}
+                >
+                  <FontAwesomeIcon
+                    icon={maximised ? 'sign-out-alt' : 'sign-in-alt'}
+                  />
+                </button>
+              )}
+            </BreadCrumbs>
             <Board levels={level} level={0}>
               <>
                 <BoardHead title={this.props.label} />

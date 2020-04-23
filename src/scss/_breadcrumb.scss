@@ -151,4 +151,30 @@
       }
     }
   }
+
+  #admin-dashboard__maximised-toggle {
+    width: 2em;
+    height: 2em;
+    margin: -0.4em 0;
+    margin-right: 1em;
+    padding: 0;
+
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+
+    border-radius: 0;
+
+    &:not(.active) {
+      transform: rotateY(180deg);
+    }
+
+    @include above($desktop) {
+      border-radius: 1em;
+    }
+
+    @include below($tablet) {
+      display: none;
+    }
+  }
 }
