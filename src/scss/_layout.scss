@@ -87,6 +87,48 @@
       }
     }
   }
+
+  &.admin-dashboard__maximised {
+    .admin-board {
+      &:not(.admin-board__full) {
+        @include between($tablet, $laptop) {
+          margin-left: -37.5%;
+          flex-basis: 100%;
+          max-width: 100%;
+        }
+        @include above($laptop) {
+          margin-left: -24em;
+        }
+      }
+    }
+  }
+
+  #admin-dashboard__maximised-toggle {
+    position: absolute;
+    top: 3em;
+    right: 0.75em;
+    z-index: 625;
+
+    width: 2em;
+    height: 2em;
+    padding: 0;
+
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+
+    border-radius: 50%;
+    // box-shadow: $admin-shadow;
+
+    @include above($desktop) {
+      top: 6em;
+      right: 4em;
+    }
+
+    @include below($tablet) {
+      display: none;
+    }
+  }
 }
 
 .modal-open #admin-dashboard {

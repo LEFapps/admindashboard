@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter, Switch, Route } from 'react-router-dom'
 import { Provider as AlertProvider } from 'react-alert'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { pathPropType, cleanBase, cleanUrl } from './helpers'
 import { alertOptions } from './Alert'
@@ -73,7 +74,8 @@ class AdminDashboard extends Component {
     this.state = {
       level: this.getLevel(),
       aboveTablet: above(768),
-      boardSwitches: []
+      boardSwitches: [],
+      maximised: false
     }
   }
   componentDidMount () {
@@ -141,7 +143,7 @@ class AdminDashboard extends Component {
   }
   render () {
     const scope = this.getScope()
-    const { boardSwitches, aboveTablet, level } = this.state
+    const { boardSwitches, aboveTablet, level, maximised } = this.state
     return (
       <AlertProvider {...alertOptions}>
         <Context.Provider
@@ -173,7 +175,10 @@ class AdminDashboard extends Component {
           </style>
           <div
             id='admin-dashboard'
-            className={this.props.darkMode ? 'dark-mode' : ''}
+            className={
+              (this.props.darkMode ? 'dark-mode' : '') +
+              (maximised && ' admin-dashboard__maximised')
+            }
           >
             <BreadCrumbs
               getLink={this.getLink}
@@ -182,6 +187,15 @@ class AdminDashboard extends Component {
               scope={scope}
               {...this.props}
             />
+            {this.props.allowFullscreen && (
+              <button
+                id={'admin-dashboard__maximised-toggle'}
+                className={'btn btn-primary' + (maximised && ' active')}
+                onClick={() => this.setState({ maximised: !maximised })}
+              >
+                <FontAwesomeIcon icon={maximised ? 'compress' : 'expand'} />
+              </button>
+            )}
             <Board levels={level} level={0}>
               <>
                 <BoardHead title={this.props.label} />
@@ -245,7 +259,9 @@ AdminDashboard.propTypes = {
     color: PropTypes.string,
     colorDark: PropTypes.string,
     logo: PropTypes.string
-  })
+  }),
+  darkMode: PropTypes.bool,
+  allowFullscreen: PropTypes.bool
 }
 
 export default withRouter(AdminDashboard)
