@@ -55,6 +55,8 @@ const App = () => (
           label={'Admin'}
           branding={branding}
           notFoundComponent={NotFound}
+          darkMode
+          allowFullscreen
         >
           <WelcomeBoard />
         </AdminDashboard>
