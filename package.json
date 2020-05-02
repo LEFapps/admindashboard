@@ -1,6 +1,6 @@
 {
   "name": "@lefapps/admin-dashboard",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "React package dashboard navigation",
   "main": "./lib/index.js",
   "scripts": {
