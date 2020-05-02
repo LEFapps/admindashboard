@@ -72,7 +72,7 @@ const BreadCrumbs = ({ children, ...props }) => {
         level={1}
         defaultItems={settings}
         items={settings}
-        url={match.url}
+        url={match.url === '/' ? '' : match.url}
       />
     </Breadcrumb>
   )

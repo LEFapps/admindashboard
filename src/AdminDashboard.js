@@ -206,7 +206,7 @@ class AdminDashboard extends Component {
               items={settings}
               levels={scope.length}
               level={1}
-              url={this.props.match.url}
+              url={this.props.match.url === '/' ? '' : this.props.match.url}
             />
             {!level && this.props.children && aboveTablet ? (
               <Board levels={1} level={1}>
