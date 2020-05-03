@@ -147,7 +147,8 @@ class AdminDashboard extends Component {
             @import
             'https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,400i,700,700i&display=swap';
             {`#admin-dashboard,
-            #admin-dashboard__tools {
+            #admin-dashboard__tools,
+            .admin-dashboard__style {
               --primary: ${
                 this.props.branding && this.props.branding.color
                   ? this.props.branding.color
